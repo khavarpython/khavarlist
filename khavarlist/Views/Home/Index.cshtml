@@ -1,17 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<h2 class="text-white pt-1"> Top Anime</h2>
+<div class="hero"
+     style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+            url('@Url.Content("~/images/frieren.avif")');">
+    <div class="hero-text">
+        <h3>Title of the anime</h3>
+        <button class="btn btn-primary">Add to List</button>
+    </div>
+</div>
 
-    <div class="hero">
-        <iframe src="https://www.youtube-nocookie.com/embed/ZEkwCGJ3o7M?enablejsapi=1&wmode=opaque&autoplay=1&mute=1&controls=0&loop=1&playlist=ZEkwCGJ3o7M"
-                class="position-absolute w-100 h-100 top-0 start-0"
-                title="Hero video"
-                controls=0
-                allow="autoplay; encrypted-media"
-                allowfullscreen>
-        </iframe>
-        <div class="hero-text">
-            <h3>Title of the anime</h3>
-            <button class="btn btn-primary">Add to List</button>
+<div class=" d-flex gap-1">
+    <div class="card">
+        <img src="~/images/Gachiakuta.webp" class="object-fit-cover" />
+        <div class="card-text">
+            
+            <h4>Title</h4>
+            <a class="btn btn-success"> Add to list</a>
         </div>
     </div>
+</div>
