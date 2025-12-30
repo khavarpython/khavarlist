@@ -1,5 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    overflow-x: hidden;
 }
 
 @media (min-width: 768px) {
@@ -12,15 +20,9 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin:0;
-  padding:0;
   background-color: #1F1F1F;
+  min-height:100vh;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -41,10 +43,6 @@ body {
     color: white;
 }
 
-.form-control::-ms-input-placeholder { 
-    color: white;
-}
-
 .tiny{
     font-size:0.85rem;
 }
@@ -53,4 +51,23 @@ body {
 }
 .gray_bg {
     background-color: #1F1F1F;
+}
+.hero{
+    width:100vw;
+    height:50rem;
+    position:relative;
+    margin-top:5rem;
+    margin-bottom:15rem;
+    aspect-ratio:16/9;
+    overflow:hidden;
+}
+.hero-text {
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    bottom:0;
+    transform: translate(-50%, -50%);
+    z-index:2;
 }
