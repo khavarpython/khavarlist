@@ -1,13 +1,25 @@
 using System.Diagnostics;
 using khavarlist.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace khavarlist.Controllers
 {
+
+    [Authorize]
     public class HomeController : Controller
     {
+        private readonly UserManager<IdentityApplicationUser> _userManager;
+
+        public HomeController(UserManager<IdentityApplicationUser> userManager )
+        {
+                this._userManager = userManager;
+        }
         public IActionResult Index()
         {
+            ViewData["UserID"] =_userManager.GetUserId(this.User);
             return View();
         }
 
