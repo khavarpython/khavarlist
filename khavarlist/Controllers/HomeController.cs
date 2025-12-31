@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using khavarlist.Areas.Identity.Data;
 using khavarlist.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,9 +12,9 @@ namespace khavarlist.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly UserManager<IdentityApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(UserManager<IdentityApplicationUser> userManager )
+        public HomeController(UserManager<User> userManager )
         {
                 this._userManager = userManager;
         }
