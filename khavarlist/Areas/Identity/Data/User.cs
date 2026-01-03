@@ -11,6 +11,10 @@ namespace khavarlist.Areas.Identity.Data;
 public class User : IdentityUser
 {
     [PersonalData]
+    [Column(TypeName = "nvarchar(100)")]
+    public override required string UserName { get; set; }
+
+    [PersonalData]
     [Column(TypeName = "nvarchar(100)")]  
     public required string FirstName { get; set; }
 
