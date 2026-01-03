@@ -23,13 +23,12 @@ namespace khavarlist.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var data = await _apiController.GetTopAnime();
-            if (data == null)
+            var viewModel = new TopMediaView
             {
-                ViewBag.ErrorMessage = "Failed to fetch anime data.";
-            }
-
-            return View(data);
+                TopAnime = (await _apiController.GetTopAnime())?.Data,
+                TopManga = (await _apiController.GetTopManga())?.Data
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

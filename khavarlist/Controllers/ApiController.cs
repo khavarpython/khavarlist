@@ -36,12 +36,45 @@ namespace khavarlist.Controllers
                 return null;
             }
         }
+
+        public async Task<JikanTopMangaResponse?> GetTopManga()
+        {
+            try
+            {
+                var url = "https://api.jikan.moe/v4/top/manga";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanTopMangaResponse>(content);
+                    return data;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
     }
 
-        public class JikanTopAnimeResponse
+
+    public class JikanTopAnimeResponse
     {
         [JsonProperty("data")]
         public required List<JikanAnimeData> Data { get; set; }
+
+        [JsonProperty("pagination")]
+        public required Pagination Pagination { get; set; }
+    }
+
+    public class JikanTopMangaResponse
+    {
+        [JsonProperty("data")]
+        public required List<JikanMangaData> Data { get; set; }
 
         [JsonProperty("pagination")]
         public required Pagination Pagination { get; set; }
@@ -71,6 +104,32 @@ namespace khavarlist.Controllers
         public Aired? Aired { get; set; }
     }
 
+    public class JikanMangaData
+    {
+        [JsonProperty("mal_id")]
+        public int MalId { get; set; }
+
+        [JsonProperty("title")]
+        public required string Title { get; set; }
+
+        [JsonProperty("score")]
+        public double? Score { get; set; }
+
+        [JsonProperty("chapters")]
+        public int? Chapters{ get; set; }
+
+        [JsonProperty("volumes")]
+        public int? Volumes { get; set; }
+
+        [JsonProperty("synopsis")]
+        public string? Synopsis { get; set; }
+
+        [JsonProperty("images")]
+        public required Images Images { get; set; }
+
+        [JsonProperty("aired")]
+        public Aired? Aired { get; set; }
+    }
     public class Images
     {
         [JsonProperty("jpg")]

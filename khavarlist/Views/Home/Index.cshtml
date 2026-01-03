@@ -1,4 +1,4 @@
-﻿@model khavarlist.Controllers.JikanTopAnimeResponse
+﻿@model TopMediaView
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -19,7 +19,7 @@
     <a>More Anime</a>
 </div>
 
-<div class="scroll-container position-relative">
+<div class="scroll-container position-relative mt-1">
     <button class="scroll-arrow scroll-arrow-left">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -27,16 +27,19 @@
     </button>
 
     <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
-        @foreach (var anime in Model.Data)
+        @if (Model.TopAnime != null)
         {
-            <div class="h-auto flex-shrink-0" style="width:11rem;">
-                <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                <div class="text-wrap">
-                    <div style="font-size:0.8rem;margin-left:8px;">
-                        @anime.Title
+            @foreach (var anime in Model.TopAnime)
+            {
+                <div class="h-auto flex-shrink-0" style="width:11rem;">
+                    <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
+                    <div class="text-wrap">
+                        <div style="font-size:0.8rem;margin-left:8px;">
+                            @anime.Title
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 
@@ -52,7 +55,8 @@
     <h5>Top Manga</h5>
     <a>More Manga</a>
 </div>
-<div class="scroll-container position-relative">
+
+<div class="scroll-container position-relative mt-1">
     <button class="scroll-arrow scroll-arrow-left">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -60,16 +64,19 @@
     </button>
 
     <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
-        @foreach (var anime in Model.Data)
+        @if(Model.TopManga != null)
         {
-            <div class="h-auto flex-shrink-0" style="width:11rem;">
-                <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                <div class="text-wrap">
-                    <div style="font-size:0.8rem;margin-left:8px;">
-                        @anime.Title
+            @foreach (var manga in Model.TopManga)
+            {
+                <div class="h-auto flex-shrink-0" style="width:11rem;">
+                    <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
+                    <div class="text-wrap">
+                        <div style="font-size:0.8rem;margin-left:8px;">
+                            @manga.Title
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 
