@@ -16,6 +16,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireUppercase = false;
 });
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

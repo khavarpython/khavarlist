@@ -1,10 +1,11 @@
-using System.Diagnostics;
 using khavarlist.Areas.Identity.Data;
 using khavarlist.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace khavarlist.Controllers
 {
@@ -12,16 +13,23 @@ namespace khavarlist.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly ApiController _apiController;
         private readonly UserManager<User> _userManager;
 
-        public HomeController(UserManager<User> userManager )
+        public HomeController(UserManager<User> userManager, IHttpClientFactory httpClientFactory)
         {
-                this._userManager = userManager;
+            this._userManager = userManager;
+            _apiController = new ApiController(httpClientFactory);
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewData["UserID"] =_userManager.GetUserId(this.User);
-            return View();
+            var data = await _apiController.GetTopAnime();
+            if (data == null)
+            {
+                ViewBag.ErrorMessage = "Failed to fetch anime data.";
+            }
+
+            return View(data);
         }
 
         public IActionResult Privacy()
