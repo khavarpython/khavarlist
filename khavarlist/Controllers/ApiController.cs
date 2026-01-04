@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using khavarlist.Models;
 using System.Buffers.Text;
 using System.Net.Http;
 using static System.Net.Mime.MediaTypeNames;
@@ -13,8 +14,8 @@ namespace khavarlist.Controllers
         {
             _httpClient = httpClientFactory.CreateClient();
         }
-
-        public async Task<JikanTopAnimeResponse?> GetTopAnime()
+        // GET TOP ANIMES
+        public async Task<JikanAnimeList?> GetTopAnime()
         {
             try
             {
@@ -24,7 +25,7 @@ namespace khavarlist.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<JikanTopAnimeResponse>(content);
+                    var data = JsonConvert.DeserializeObject<JikanAnimeList>(content);
                     return data;
                 }
 
@@ -37,7 +38,8 @@ namespace khavarlist.Controllers
             }
         }
 
-        public async Task<JikanTopMangaResponse?> GetTopManga()
+        // GET TOP MANGAS
+        public async Task<JikanMangaList?> GetTopManga()
         {
             try
             {
@@ -47,7 +49,7 @@ namespace khavarlist.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<JikanTopMangaResponse>(content);
+                    var data = JsonConvert.DeserializeObject<JikanMangaList>(content);
                     return data;
                 }
 
@@ -59,110 +61,49 @@ namespace khavarlist.Controllers
                 return null;
             }
         }
-    }
 
+        // GET ANIME BY ID
+        public async Task<JikanAnimeSingle?> GetAnimeById(int id)
+        {
+            try
+            {
+                var url = $"https://api.jikan.moe/v4/anime/{id}/full";
+                var response = await _httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanAnimeSingle>(content);
+                    return data; 
+                }
+                return null;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
 
-    public class JikanTopAnimeResponse
-    {
-        [JsonProperty("data")]
-        public required List<JikanAnimeData> Data { get; set; }
-
-        [JsonProperty("pagination")]
-        public required Pagination Pagination { get; set; }
-    }
-
-    public class JikanTopMangaResponse
-    {
-        [JsonProperty("data")]
-        public required List<JikanMangaData> Data { get; set; }
-
-        [JsonProperty("pagination")]
-        public required Pagination Pagination { get; set; }
-    }
-
-    public class JikanAnimeData
-    {
-        [JsonProperty("mal_id")]
-        public int MalId { get; set; }
-
-        [JsonProperty("title")]
-        public required string Title { get; set; }
-
-        [JsonProperty("score")]
-        public double? Score { get; set; }
-
-        [JsonProperty("episodes")]
-        public int? Episodes { get; set; }
-
-        [JsonProperty("synopsis")]
-        public string? Synopsis { get; set; }
-
-        [JsonProperty("images")]
-        public required Images Images { get; set; }
-
-        [JsonProperty("aired")]
-        public Aired? Aired { get; set; }
-    }
-
-    public class JikanMangaData
-    {
-        [JsonProperty("mal_id")]
-        public int MalId { get; set; }
-
-        [JsonProperty("title")]
-        public required string Title { get; set; }
-
-        [JsonProperty("score")]
-        public double? Score { get; set; }
-
-        [JsonProperty("chapters")]
-        public int? Chapters{ get; set; }
-
-        [JsonProperty("volumes")]
-        public int? Volumes { get; set; }
-
-        [JsonProperty("synopsis")]
-        public string? Synopsis { get; set; }
-
-        [JsonProperty("images")]
-        public required Images Images { get; set; }
-
-        [JsonProperty("aired")]
-        public Aired? Aired { get; set; }
-    }
-    public class Images
-    {
-        [JsonProperty("jpg")]
-        public required ImageUrls Jpg { get; set; }
-    }
-
-    public class ImageUrls
-    {
-        [JsonProperty("image_url")]
-        public required string ImageUrl { get; set; }
-
-        [JsonProperty("large_image_url")]
-        public string? LargeImageUrl { get; set; }
-    }
-
-    public class Aired
-    {
-        [JsonProperty("from")]
-        public DateTime? From { get; set; }
-
-        [JsonProperty("to")]
-        public DateTime? To { get; set; }
-    }
-
-    public class Pagination
-    {
-        [JsonProperty("last_visible_page")]
-        public int LastVisiblePage { get; set; }
-
-        [JsonProperty("has_next_page")]
-        public bool HasNextPage { get; set; }
-
-        [JsonProperty("current_page")]
-        public int CurrentPage { get; set; }
+        // GET MANGA BY ID
+        public async Task<JikanMangaSingle?> GetMangaById(int id)
+        {
+            try
+            {
+                var url = $"https://api.jikan.moe/v4/manga/{id}/full";
+                var response = await _httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanMangaSingle>(content);
+                    return data;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

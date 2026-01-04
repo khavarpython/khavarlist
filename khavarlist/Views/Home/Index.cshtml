@@ -14,7 +14,7 @@
 </div>
 
 <!--First Scroll Div-->
-<div class="d-flex justify-content-between border-1 border-bottom border-white pb-1">
+<div class="d-flex justify-content-between border-1 border-bottom border-white">
     <h5 >Top Anime</h5>
     <a>More Anime</a>
 </div>
@@ -31,14 +31,16 @@
         {
             @foreach (var anime in Model.TopAnime)
             {
-                <div class="h-auto flex-shrink-0" style="width:11rem;">
-                    <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                    <div class="text-wrap">
-                        <div style="font-size:0.8rem;margin-left:8px;">
-                            @anime.Title
+                <a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="@anime.MalId">
+                    <div class="h-auto flex-shrink-0" style="width:11rem;">
+                        <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
+                        <div class="text-wrap">
+                            <div class="text-white" style="font-size:0.8rem;margin-left:8px;">
+                                @anime.Title
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             }
         }
     </div>
@@ -51,7 +53,7 @@
 </div>
 
 <!-- Second Scroll Div -->
-<div class="d-flex justify-content-between border-1 border-bottom border-white pb-1">
+<div class="d-flex justify-content-between border-1 border-bottom border-white">
     <h5>Top Manga</h5>
     <a>More Manga</a>
 </div>
@@ -68,14 +70,16 @@
         {
             @foreach (var manga in Model.TopManga)
             {
-                <div class="h-auto flex-shrink-0" style="width:11rem;">
-                    <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                    <div class="text-wrap">
-                        <div style="font-size:0.8rem;margin-left:8px;">
-                            @manga.Title
+                <a class="text-decoration-none" asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
+                    <div class="h-auto flex-shrink-0" style="width:11rem;">
+                        <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
+                        <div class="text-wrap">
+                            <div class="text-white" style="font-size:0.8rem;margin-left:8px;">
+                                @manga.Title
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             }
         }
     </div>
