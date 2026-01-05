@@ -35,6 +35,15 @@ namespace khavarlist.Models
         [JsonProperty("synopsis")]
         public string? Synopsis { get; set; }
 
+        [JsonProperty("season")]
+        public string? Season { get; set; }
+
+        [JsonProperty("year")]
+        public string? Year { get; set; }
+
+        [JsonProperty("rank")]
+        public int? Rank { get; set; }
+
         [JsonProperty("images")]
         public required Images Images { get; set; }
 

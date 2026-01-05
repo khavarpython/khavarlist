@@ -1,4 +1,5 @@
 ﻿using khavarlist.Areas.Identity.Data;
+using khavarlist.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,26 @@ public class AuthDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+
+        builder.Entity<Anime>()
+            .HasIndex(a => a.MalId)
+            .IsUnique();
+
+        builder.Entity<UserAnime>()
+            .HasOne(ua => ua.User)
+            .WithMany()
+            .HasForeignKey(ua => ua.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<UserAnime>()
+            .HasOne(ua => ua.Anime)
+            .WithMany()
+            .HasForeignKey(ua => ua.AnimeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<UserAnime>()
+            .HasIndex(ua => new { ua.UserId, ua.AnimeId })
+            .IsUnique();
+
     }
 }

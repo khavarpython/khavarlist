@@ -3,6 +3,45 @@
     ViewData["Title"] = "";
 }
 
-<div>
+<div class="mt-2">
     @Model.Data.Title
+</div>
+<div>
+    <div class="d-flex gap-4">
+        <img src="@Model.Data.Images.Jpg.ImageUrl" class=""/>
+        <div >
+            <div class="w-100 d-flex gap-3">
+                <span>Rank: @Model.Data.Rank</span>
+                <span>Score: @Model.Data.Score</span>
+                <span>Season: @Model.Data.Season @Model.Data.Year</span>
+            </div>
+            <div class="w-100">
+                <a class="btn btn-primary">Add to list</a>
+                <select name="status" id="status">
+                    <option value="watching">Watching</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+                <select name="score" id="score">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+
+                <label>Episode</label>
+                <input type="number" />
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <p>@Model.Data.Synopsis</p>
+    </div>
 </div>
