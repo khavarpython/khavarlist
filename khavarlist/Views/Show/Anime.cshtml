@@ -1,47 +1,118 @@
 ﻿@model JikanAnimeSingle
 @{
-    ViewData["Title"] = "";
+    var userAnimeDetails = ViewData["UserDetails"] as UserAnime;
 }
+@Html.AntiForgeryToken()
 
-<div class="mt-2">
-    @Model.Data.Title
+<div class="mt-3">
+    <h3>@Model.Data.Title</h3>
 </div>
 <div>
-    <div class="d-flex gap-4">
-        <img src="@Model.Data.Images.Jpg.ImageUrl" class=""/>
-        <div >
-            <div class="w-100 d-flex gap-3">
-                <span>Rank: @Model.Data.Rank</span>
-                <span>Score: @Model.Data.Score</span>
-                <span>Season: @Model.Data.Season @Model.Data.Year</span>
-            </div>
-            <div class="w-100">
-                <a class="btn btn-primary">Add to list</a>
-                <select name="status" id="status">
-                    <option value="watching">Watching</option>
-                    <option value="completed">Completed</option>
-                </select>
-
-                <select name="score" id="score">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-
-                <label>Episode</label>
-                <input type="number" />
+    <div class="d-flex gap-4 justify-content-between">
+        <div>
+            <img src="@Model.Data.Images.Jpg.ImageUrl" class="" />
+            <div class="d-flex flex-wrap gap-1">
+                @if(Model.Data.Genres != null)
+                {
+                    @foreach(var genre in Model.Data.Genres)
+                    {
+                        <span class="border-1 border-light rounded-3 p-1 my-1 fw-bold" style="font-size:0.8rem;background-color:dimgray">@genre.Name</span>
+                    }
+                }
             </div>
         </div>
+        
+        <div class="" style="width:28rem">
+            <div class="w-100 h-75 mb-2">
+                <iframe class="w-100 h-100" src="https://www.youtube-nocookie.com/embed/ZEkwCGJ3o7M?enablejsapi=1&wmode=opaque&autoplay=1"></iframe>
+            </div>
 
+            <div class="d-flex gap-1 justify-content-center">
+                <span>@Model.Data.Source</span>
+                <span>@Model.Data.Episodes Episodes</span>
+                <span>@Model.Data.Type</span>
+            </div>
+
+        </div>
+
+        <div class="d-flex flex-column gap-4" style="width:21rem">
+            <div class="w-100 d-flex justify-content-between gap-3 mb-1 border border-light border-1 p-1" style="font-size:0.8rem">
+                <span>Rank: @Model.Data.Rank</span>
+                <span>Score: @Model.Data.Score</span>
+                <span class="text-capitalize">Season: @Model.Data.Season @Model.Data.Year</span>
+            </div>
+
+            <div class="d-flex gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
+                @if (!Convert.ToBoolean(ViewData["AddStatus"]))
+                {
+                    @* Add to List *@
+                    <button class="btn btn-sm btn-primary flex-grow-1" id="addToListBtn" data-anime-id="@Model.Data.MalId">
+                        Add to list +
+                    </button>                   
+                    
+                    @* Update Status *@
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                        <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
+                        <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
+                        <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
+                        <option value="Dropped" selected="@(userAnimeDetails?.WatchStatus == "Dropped")">Dropped</option>
+                        <option value="Plan_To_Watch" selected="@(userAnimeDetails?.WatchStatus == "Plan_To_Watch")">Plan to Watch</option>
+                    </select>
+                }
+                else
+                {
+                    @* Update Status *@
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                        <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
+                        <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
+                        <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
+                        <option value="Dropped" selected="@(userAnimeDetails?.WatchStatus == "Dropped")">Dropped</option>
+                        <option value="Plan_To_Watch" selected="@(userAnimeDetails?.WatchStatus == "Plan_To_Watch")">Plan to Watch</option>
+                    </select>
+                    }
+
+                @* Update Score *@
+                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="score" data-anime-id="@Model.Data.MalId">
+                    <option disabled selected="@(userAnimeDetails?.Score == 0 || userAnimeDetails?.Score == null)">Select</option>
+                    <option value="1" selected="@(userAnimeDetails?.Score == 1)">1</option>
+                    <option value="2" selected="@(userAnimeDetails?.Score == 2)">2</option>
+                    <option value="3" selected="@(userAnimeDetails?.Score == 3)">3</option>
+                    <option value="4" selected="@(userAnimeDetails?.Score == 4)">4</option>
+                    <option value="5" selected="@(userAnimeDetails?.Score == 5)">5</option>
+                    <option value="6" selected="@(userAnimeDetails?.Score == 6)">6</option>
+                    <option value="7" selected="@(userAnimeDetails?.Score == 7)">7</option>
+                    <option value="8" selected="@(userAnimeDetails?.Score == 8)">8</option>
+                    <option value="9" selected="@(userAnimeDetails?.Score == 9)">9</option>
+                    <option value="10" selected="@(userAnimeDetails?.Score == 10)">10</option>
+                </select>
+
+                @* Update Progress *@
+                <div class="d-flex input-group input-group-sm" style="max-width: 7rem;">
+                    <span class="align-self-center py-2 px-2 m-0 b border-end-0 text-black bg-white rounded-start" style="font-size:0.75rem;">Episode</span>
+                    <input class="form-control form-control-sm m-0 shadow-none px-2" style="width:1.8rem;" 
+                           value="@(userAnimeDetails?.Progress ?? 0)" type="number" id="progress" name="progress" min="0"
+                           max="@(Model.Data.Episodes ?? 9999)" data-anime-id="@Model.Data.MalId" />
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <div>
-        <p>@Model.Data.Synopsis</p>
+
+    <div class="mt-5">
+        <h6 class="border-bottom border-light"> Synopsis </h6>
+        <p style="text-align: justify;">@Model.Data.Synopsis</p>
+    </div>
+
+    <div class="mt-5">
+        <h6 class="border-bottom border-light"> Background </h6>
+        <p style="text-align: justify;">@Model.Data.Background</p>
     </div>
 </div>
+
+
+@section Scripts {
+    <script src="~/js/animeList.js" asp-append-version="true">
+    </script>
+    
+    
+}
