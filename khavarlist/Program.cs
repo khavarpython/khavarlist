@@ -1,8 +1,7 @@
-using khavarlist.Areas.Identity.Data;
-using khavarlist.Data;
-using khavarlist.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using khavarlist.Data;
+using khavarlist.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");;
 
@@ -18,7 +17,6 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = false;
 });
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<IAnimeService, AnimeService>();
 
 var app = builder.Build();
 

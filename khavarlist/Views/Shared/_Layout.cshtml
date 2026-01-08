@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - khavarlist</title>
     <script type="importmap"></script>
-    <script src="~/js/anime.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/khavarlist.styles.css" asp-append-version="true" />
@@ -39,8 +38,8 @@
                 </div>
 
                 <div class="navbar-collapse collapse d-flex justify-content-end align-items-center text-center gap-3">
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Search" asp-action="Index" method="get">
-                        <input class="form-control mr-sm-2 border-0 text-white" style="background-color: #1F1F1F;" value="@ViewBag.Query" name="query" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2 border-0 text-white" style="background-color: #1F1F1F;" type="search" placeholder="Search" aria-label="Search">
                     </form>
                     <partial name="_LoginPartial.cshtml" />
                 </div>
