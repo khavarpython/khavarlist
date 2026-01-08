@@ -53,6 +53,9 @@ namespace khavarlist.Models
         [JsonProperty("rank")]
         public int? Rank { get; set; }
 
+        [JsonProperty("trailer")]
+        public Trailer? Trailer { get; set; }
+
         [JsonProperty("genres")]
         public List<Genre>? Genres { get; set; }
 
@@ -61,6 +64,12 @@ namespace khavarlist.Models
 
         [JsonProperty("aired")]
         public Aired? Aired { get; set; }
+    }
+
+    public class Trailer
+    {
+        [JsonProperty("embed_url")]
+        public required string? embed_url { get; set; }
     }
 
     public class Images

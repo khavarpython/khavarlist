@@ -8,13 +8,10 @@ namespace khavarlist.Controllers
     public class SearchController : Controller
     {
         private readonly ApiController _apiController;
-        private readonly UserManager<User> _userManager;
-        private readonly IAnimeService _animeService;
-        public SearchController(IHttpClientFactory httpClientFactory, UserManager<User> userManager, IAnimeService animeService)
+
+        public SearchController(IHttpClientFactory httpClientFactory)
         {
             _apiController = new ApiController(httpClientFactory);
-            _animeService = animeService;
-            _userManager = userManager;
         }
 
         [Route("Search")]
@@ -26,11 +23,9 @@ namespace khavarlist.Controllers
             }
 
             var animes = await _apiController.GetAnimes(query, id);
-
-            // Pass query to view for pagination links
             ViewBag.Query = query;
 
-            return View(animes);
+            return View("AnimeSearch", animes);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace khavarlist.Controllers
         private readonly ApiController _apiController;
         private readonly UserManager<User> _userManager;
         private readonly IAnimeService _animeService;
+
         public ShowController(IHttpClientFactory httpClientFactory, UserManager<User> userManager, IAnimeService animeService)
         {
-             _apiController = new ApiController(httpClientFactory);
+            _apiController = new ApiController(httpClientFactory);
             _animeService = animeService;
             _userManager = userManager;
         }
-
 
         [Route("Show/Anime/{id}")]
         public async Task<IActionResult> Anime(int id)

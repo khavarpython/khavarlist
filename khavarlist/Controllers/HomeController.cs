@@ -9,7 +9,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace khavarlist.Controllers
 {
-
     [Authorize]
     public class HomeController : Controller
     {
@@ -21,6 +20,7 @@ namespace khavarlist.Controllers
             this._userManager = userManager;
             _apiController = new ApiController(httpClientFactory);
         }
+
         public async Task<IActionResult> Index()
         {
             var viewModel = new TopMediaView
@@ -28,7 +28,7 @@ namespace khavarlist.Controllers
                 TopAnime = (await _apiController.GetTopAnime())?.Data,
                 TopManga = (await _apiController.GetTopManga())?.Data
             };
-            return View(viewModel);
+            return View("Home", viewModel);
         }
 
         public IActionResult Privacy()
