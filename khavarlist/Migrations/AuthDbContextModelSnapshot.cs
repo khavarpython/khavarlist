@@ -235,17 +235,11 @@ namespace khavarlist.Migrations
 
             modelBuilder.Entity("khavarlist.Models.Anime", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("MalId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MalId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -254,12 +248,9 @@ namespace khavarlist.Migrations
                     b.Property<int?>("TotalEpisodes")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("MalId");
 
-                    b.HasIndex("MalId")
-                        .IsUnique();
-
-                    b.ToTable("Anime");
+                    b.ToTable("Animes");
                 });
 
             modelBuilder.Entity("khavarlist.Models.UserAnime", b =>
@@ -294,7 +285,7 @@ namespace khavarlist.Migrations
                     b.HasIndex("UserId", "AnimeId")
                         .IsUnique();
 
-                    b.ToTable("UserAnime");
+                    b.ToTable("UserAnimes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

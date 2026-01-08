@@ -5,7 +5,7 @@ namespace khavarlist.Models
 {
     public class UserAnime
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string UserId { get; set; }
         public required int AnimeId { get; set; }
 
@@ -13,7 +13,7 @@ namespace khavarlist.Models
         public int? Progress { get; set; }
         public int? Score { get; set; }
 
-        public required User User { get; set; } 
-        public required Anime Anime { get; set; }
+        public User? User { get; set; } 
+        public Anime? Anime { get; set; }
     }
 }

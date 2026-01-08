@@ -12,14 +12,19 @@ public class AuthDbContext : IdentityDbContext<User>
         : base(options)
     {
     }
+    public DbSet<Anime> Animes { get; set; }
+    public DbSet<UserAnime> UserAnimes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
         builder.Entity<Anime>()
-            .HasIndex(a => a.MalId)
-            .IsUnique();
+            .HasKey(a => a.MalId);
+
+        builder.Entity<Anime>()
+              .Property(a => a.MalId)
+              .ValueGeneratedNever(); 
 
         builder.Entity<UserAnime>()
             .HasOne(ua => ua.User)
@@ -31,11 +36,10 @@ public class AuthDbContext : IdentityDbContext<User>
             .HasOne(ua => ua.Anime)
             .WithMany()
             .HasForeignKey(ua => ua.AnimeId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasPrincipalKey(a => a.MalId); 
 
         builder.Entity<UserAnime>()
             .HasIndex(ua => new { ua.UserId, ua.AnimeId })
             .IsUnique();
-
     }
 }
