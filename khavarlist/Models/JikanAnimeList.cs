@@ -26,8 +26,11 @@ namespace khavarlist.Models
         [JsonProperty("title")]
         public required string Title { get; set; }
 
-        [JsonProperty("score")]
-        public double? Score { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+
+        [JsonProperty("source")]
+        public required string Source { get; set; }
 
         [JsonProperty("episodes")]
         public int? Episodes { get; set; }
@@ -35,14 +38,23 @@ namespace khavarlist.Models
         [JsonProperty("synopsis")]
         public string? Synopsis { get; set; }
 
+        [JsonProperty("background")]
+        public string? Background { get; set; }
+
         [JsonProperty("season")]
         public string? Season { get; set; }
 
         [JsonProperty("year")]
         public string? Year { get; set; }
 
+        [JsonProperty("score")]
+        public double? Score { get; set; }
+
         [JsonProperty("rank")]
         public int? Rank { get; set; }
+
+        [JsonProperty("genres")]
+        public List<Genre>? Genres { get; set; }
 
         [JsonProperty("images")]
         public required Images Images { get; set; }
@@ -50,11 +62,13 @@ namespace khavarlist.Models
         [JsonProperty("aired")]
         public Aired? Aired { get; set; }
     }
+
     public class Images
     {
         [JsonProperty("jpg")]
         public required ImageUrls Jpg { get; set; }
     }
+
     public class ImageUrls
     {
         [JsonProperty("image_url")]
@@ -71,6 +85,18 @@ namespace khavarlist.Models
 
         [JsonProperty("to")]
         public DateTime? To { get; set; }
+    }
+
+    public class Genre
+    {
+        [JsonProperty("mal_id")]
+        public int? MalId { get; set; }
+
+        [JsonProperty("type")]
+        public string? Type { get; set; }
+
+        [JsonProperty("name")]
+        public string? Name { get; set; }
     }
 
     public class Pagination

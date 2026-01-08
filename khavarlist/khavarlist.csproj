@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
     <Compile Remove="wwwroot\NewFolder\**" />
-    <Content Remove="NewFolder\**" />
     <Content Remove="wwwroot\NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder\**" />
-    <None Remove="NewFolder\**" />
     <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
@@ -28,6 +24,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
