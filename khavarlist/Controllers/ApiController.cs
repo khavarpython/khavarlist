@@ -41,6 +41,31 @@ namespace khavarlist.Controllers
             }
         }
 
+        // GET ALL MANGA
+        public async Task<JikanMangaList?> GetMangas(string? query, int page)
+        {
+            try
+            {
+                if (query == null) { query = ""; }
+                var url = $"https://api.jikan.moe/v4/manga?q={query}&page={page}";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanMangaList>(content);
+                    return data;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+
         // GET TOP ANIMES
         public async Task<JikanAnimeList?> GetTopAnime()
         {

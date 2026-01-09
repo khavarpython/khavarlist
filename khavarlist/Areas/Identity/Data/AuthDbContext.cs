@@ -15,6 +15,10 @@ public class AuthDbContext : IdentityDbContext<User>
     public DbSet<Anime> Animes { get; set; }
     public DbSet<UserAnime> UserAnimes { get; set; }
 
+    public DbSet<Manga> Mangas { get; set; }
+    public DbSet<UserManga> UserMangas { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -22,9 +26,10 @@ public class AuthDbContext : IdentityDbContext<User>
         builder.Entity<Anime>()
             .HasKey(a => a.MalId);
 
+
         builder.Entity<Anime>()
               .Property(a => a.MalId)
-              .ValueGeneratedNever(); 
+              .ValueGeneratedNever();
 
         builder.Entity<UserAnime>()
             .HasOne(ua => ua.User)
@@ -36,10 +41,36 @@ public class AuthDbContext : IdentityDbContext<User>
             .HasOne(ua => ua.Anime)
             .WithMany()
             .HasForeignKey(ua => ua.AnimeId)
-            .HasPrincipalKey(a => a.MalId); 
+            .HasPrincipalKey(a => a.MalId);
 
         builder.Entity<UserAnime>()
             .HasIndex(ua => new { ua.UserId, ua.AnimeId })
+            .IsUnique();
+
+
+        builder.Entity<Manga>()
+              .Property(m => m.MalId)
+              .ValueGeneratedNever();
+
+        builder.Entity<Manga>()
+            .HasKey(m => m.MalId);
+
+        builder.Entity<UserManga>()
+            .HasOne(um => um.User)
+            .WithMany()
+            .HasForeignKey(um => um.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+        builder.Entity<UserManga>()
+            .HasOne(um => um.Manga)
+            .WithMany()
+            .HasForeignKey(um => um.MangaId)
+            .HasPrincipalKey(m => m.MalId);
+
+
+        builder.Entity<UserManga>()
+            .HasIndex(um => new { um.UserId, um.MangaId })
             .IsUnique();
     }
 }

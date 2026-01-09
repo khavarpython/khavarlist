@@ -26,13 +26,19 @@ namespace khavarlist.Controllers
             var anime = await _apiController.GetAnimeById(id);
             var userId = _userManager.GetUserId(User);
 
-            ViewData["AddStatus"] = await _animeService.IsAnimeInUserList(userId, id);
-            ViewData["UserDetails"] = await _animeService.GetUserAnimeDetails(userId, id);
-          
+            if(userId == null)
+            {
+                return NotFound();
+            }
+
             if (anime == null)
             {
                 return NotFound();
             }
+
+            ViewData["AddStatus"] = await _animeService.IsAnimeInUserList(userId, id);
+            ViewData["UserDetails"] = await _animeService.GetUserAnimeDetails(userId, id);
+
             return View(anime);
         }
 

@@ -3,6 +3,7 @@ using khavarlist.Models;
 using khavarlist.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace khavarlist.Controllers
 {
@@ -20,6 +21,10 @@ namespace khavarlist.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                return View();
+            }
             var userAnimes = await _animeService.GetUserAnimes(userId);
             return View();
         }
@@ -31,8 +36,16 @@ namespace khavarlist.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User);
-                await _animeService.AddAnimeToList(userId, animeId, WatchStatus);
-                return Json(new { success = true, message = "Added to list successfully!" });
+                if (userId == null)
+                {
+                    return Json(new { sucess = false, message = "No user" });
+                }
+                else
+                {
+                    await _animeService.AddAnimeToList(userId, animeId, WatchStatus);
+                    return Json(new { success = true, message = "Added to list successfully!" });
+                }
+
             }
             catch (Exception ex)
             {
@@ -48,8 +61,16 @@ namespace khavarlist.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User);
-                await _animeService.UpdateAnimeStatus(userId, animeId, watchStatus);
-                return Json(new { success = true, message = "Status updated!" });
+                if (userId == null)
+                {
+                    return Json(new { sucess = false,message="No User" });
+                }
+                else
+                {
+                    await _animeService.UpdateAnimeStatus(userId, animeId, watchStatus);
+                    return Json(new { success = true, message = "Status updated!" });
+                }
+
             }
             catch (Exception ex)
             {
@@ -65,8 +86,17 @@ namespace khavarlist.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User);
-                await _animeService.UpdateAnimeProgress(userId, animeId, progress);
-                return Json(new { success = true, message = "Progress updated!" });
+                if (userId != null)
+                {
+                    await _animeService.UpdateAnimeProgress(userId, animeId, progress);
+                    return Json(new { success = true, message = "Progress updated!" });
+                }
+                else
+                {
+                    return Json(new { sucess = false, message = "No User" });
+                }
+                
+              
             }
             catch (Exception ex)
             {
@@ -82,8 +112,16 @@ namespace khavarlist.Controllers
             try
             {
                 var userId = _userManager.GetUserId(User);
-                await _animeService.UpdateAnimeScore(userId, animeId, score);
-                return Json(new { success = true, message = "Score updated!" });
+                if (userId != null)
+                {
+                    await _animeService.UpdateAnimeScore(userId, animeId, score);
+                    return Json(new { success = true, message = "Score updated!" });
+                }
+                else
+                {
+                    return Json(new { sucess = false, message = "No User" });
+                }
+
             }
             catch (Exception ex)
             {

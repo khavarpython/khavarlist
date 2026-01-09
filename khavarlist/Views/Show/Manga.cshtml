@@ -1,8 +1,119 @@
 ﻿@model JikanMangaSingle
 @{
-    ViewData["Title"] = "";
+    ViewData["Title"] = Model.Data.Title ;
+    var userMangaDetails = ViewData["UserDetails"] as UserManga;
 }
+@Html.AntiForgeryToken()
+
+<div class="mt-3">
+    <h3>@Model.Data.Title</h3>
+</div>
 
 <div>
-    @Model.Data.Title
+    <div class="d-flex gap-4 justify-content-between">
+        <div style="width:20rem;">
+            <img src="@Model.Data.Images.Jpg.ImageUrl" class="" />
+            <div class="d-flex flex-wrap gap-1">
+                @if(Model.Data.Genres != null)
+                {
+                    @foreach(var genre in Model.Data.Genres)
+                    {
+                        <span class="border-1 border-light rounded-3 p-1 my-1 fw-bold" style="font-size:0.8rem;background-color:dimgray">@genre.Name</span>
+                    }
+                }
+            </div>
+        </div>
+        
+        <div class="" style="width:28rem">
+            <div class="d-flex gap-1 justify-content-center">
+                <span>@Model.Data.Status</span>
+                <span>@Model.Data.Chapters Chapters</span>
+                <span>@Model.Data.Type</span>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-4" style="width:21rem">
+            <div class="w-100 d-flex justify-content-between gap-3 mb-1 border border-light border-1 p-1" style="font-size:0.8rem">
+                <span>Rank: @Model.Data.Rank</span>
+                <span>Score: @Model.Data.Score</span>
+            </div>
+
+            <div class="d-flex gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
+                @if (!Convert.ToBoolean(ViewData["AddStatus"]))
+                {
+                    @* Add to List *@
+                    <button class="btn btn-sm btn-primary flex-grow-1" id="addToListBtn" data-anime-id="@Model.Data.MalId">
+                        Add to list +
+                    </button>                   
+                    
+                    @* Update Status *@
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                        <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
+                        <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
+                        <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
+                        <option value="Dropped" selected="@(userMangaDetails?.ReadStatus == "Dropped")">Dropped</option>
+                        <option value="Plan_To_Watch" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Watch")">Plan to Watch</option>
+                    </select>
+                }
+                else
+                {
+                    @* Update Status *@
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                        <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
+                        <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
+                        <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
+                        <option value="Dropped" selected="@(userMangaDetails?.ReadStatus == "Dropped")">Dropped</option>
+                        <option value="Plan_To_Watch" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Watch")">Plan to Watch</option>
+                    </select>
+                    }
+
+                @* Update Score *@
+                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="score" data-anime-id="@Model.Data.MalId">
+                    <option disabled selected="@(userMangaDetails?.Score == 0 || userMangaDetails?.Score == null)">Select</option>
+                    <option value="1" selected="@(userMangaDetails?.Score == 1)">1</option>
+                    <option value="2" selected="@(userMangaDetails?.Score == 2)">2</option>
+                    <option value="3" selected="@(userMangaDetails?.Score == 3)">3</option>
+                    <option value="4" selected="@(userMangaDetails?.Score == 4)">4</option>
+                    <option value="5" selected="@(userMangaDetails?.Score == 5)">5</option>
+                    <option value="6" selected="@(userMangaDetails?.Score == 6)">6</option>
+                    <option value="7" selected="@(userMangaDetails?.Score == 7)">7</option>
+                    <option value="8" selected="@(userMangaDetails?.Score == 8)">8</option>
+                    <option value="9" selected="@(userMangaDetails?.Score == 9)">9</option>
+                    <option value="10" selected="@(userMangaDetails?.Score == 10)">10</option>
+                </select>
+
+                @* Update Progress *@
+                <div class="d-flex input-group input-group-sm" style="max-width: 7rem;">
+                    <span class="align-self-center py-2 px-2 m-0 b border-end-0 text-black bg-white rounded-start" style="font-size:0.75rem;">Chapters</span>
+                    <input class="form-control form-control-sm m-0 shadow-none px-2" style="width:1.8rem;" 
+                           value="@(userMangaDetails?.Progress ?? 0)" type="number" id="progress" name="progress" min="0"
+                           max="@(Model.Data.Chapters ?? 9999)" data-anime-id="@Model.Data.MalId" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @if(Model.Data.Synopsis != null)
+    {
+    <div class="mt-5">
+        <h6 class="border-bottom border-light"> Synopsis </h6>
+        <p style="text-align: justify;">@Model.Data.Synopsis</p>
+    </div>
+    }
+
+    @if(Model.Data.Background != null)
+    {
+        <div class="mt-5">
+            <h6 class="border-bottom border-light"> Background </h6>
+            <p style="text-align: justify;">@Model.Data.Background</p>
+        </div>
+    }
 </div>
+
+
+@section Scripts {
+    <script src="~/js/animeList.js" asp-append-version="true">
+    </script>
+    
+    
+}
