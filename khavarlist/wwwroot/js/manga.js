@@ -1,26 +1,27 @@
-﻿// Anime List AJAX Functions
+﻿// Manga List AJAX Functions
 // Helper function to get anti-forgery token
+
 function getAntiForgeryToken() {
     return document.querySelector('input[name="__RequestVerificationToken"]').value;
 }
 
-// Helper function to show messages (you can customize this)
+// Helper function to show messages
 function showMessage(message, isSuccess) {
-    alert(message); // Replace with toast/notification library if you prefer
+    alert(message); 
 }
 
-// 1. Add anime to list
-async function addToList(animeId, watchStatus) {
+// 1. Add manga to list
+async function addToMangaList(mangaId, readStatus) {
     try {
-        const response = await fetch('/AnimeList/AddToList', {
+        const response = await fetch('/MangaList/AddToList', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'RequestVerificationToken': getAntiForgeryToken()
             },
             body: new URLSearchParams({
-                animeId: animeId,
-                watchStatus: watchStatus
+                mangaId: mangaId,
+                readStatus: readStatus
             })
         });
 
@@ -40,18 +41,18 @@ async function addToList(animeId, watchStatus) {
     }
 }
 
-// 2. Update watch status
-async function updateStatus(animeId, watchStatus) {
+// 2. Update read status
+async function updateMangaStatus(mangaId, readStatus) {
     try {
-        const response = await fetch('/AnimeList/UpdateStatus', {
+        const response = await fetch('/MangaList/UpdateStatus', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'RequestVerificationToken': getAntiForgeryToken()
             },
             body: new URLSearchParams({
-                animeId: animeId,
-                watchStatus: watchStatus
+                mangaId: mangaId,
+                readStatus: readStatus
             })
         });
 
@@ -70,18 +71,17 @@ async function updateStatus(animeId, watchStatus) {
         return false;
     }
 }
-
-// 3. Update progress
-async function updateProgress(animeId, progress) {
+// 3. Update manga progress
+async function updateMangaProgress(mangaId, progress) {
     try {
-        const response = await fetch('/AnimeList/UpdateProgress', {
+        const response = await fetch('/MangaList/UpdateProgress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'RequestVerificationToken': getAntiForgeryToken()
             },
             body: new URLSearchParams({
-                animeId: animeId,
+                mangaId: mangaId,
                 progress: progress
             })
         });
@@ -101,18 +101,17 @@ async function updateProgress(animeId, progress) {
         return false;
     }
 }
-
-// 4. Update score
-async function updateScore(animeId, score) {
+// 4. Update manga score
+async function updateMangaScore(mangaId, score) {
     try {
-        const response = await fetch('/AnimeList/UpdateScore', {
+        const response = await fetch('/MangaList/UpdateScore', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'RequestVerificationToken': getAntiForgeryToken()
             },
             body: new URLSearchParams({
-                animeId: animeId,
+                mangaId: mangaId,
                 score: score
             })
         });
@@ -133,67 +132,67 @@ async function updateScore(animeId, score) {
     }
 }
 
+
 // Initialize event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // ---------------------------------------------------------//
 
-    // Anime elements
-    const addToListBtn = document.getElementById('addToListBtn');
-    const statusSelect = document.getElementById('status');
+    //Manga Elements
+    const addToMangaListBtn = document.getElementById('addToMangaList');
+    const mangaStatusSelect = document.getElementById('mangaStatus');
 
-    // Anime add
-    if (addToListBtn) {
-        addToListBtn.addEventListener('click', function (e) {
+    // Manga add
+    if (addToMangaListBtn) {
+        addToMangaListBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const animeId = this.dataset.animeId;
+            const mangaId = this.dataset.mangaId;
 
-            addToList(animeId, "Watching");
+            addToMangaList(mangaId, "Watching");
 
-            addToListBtn.style.display = 'none';
-            statusSelect.style.display = 'block';
+            addToMangaListBtn.style.display = 'none';
+            mangaStatusSelect.style.display = 'block';
         });
     }
 
-    // Update Anime Status dropdown
-    if (statusSelect) {
-        statusSelect.addEventListener('change', function () {
-            const animeId = this.dataset.animeId;
-            const watchStatus = this.value;
-            updateStatus(animeId, watchStatus);
+    // Update Manga Status dropdown
+    if (mangaStatusSelect) {
+        mangaStatusSelect.addEventListener('change', function () {
+            const mangaId = this.dataset.mangaId;
+            const readStatus = this.value;
+            updateMangaStatus(mangaId, readStatus);
         });
     }
 
-    // Update Progress button
-    const progressInput = document.getElementById('progress');
-    
-    if (progressInput) {
-        const animeId = progressInput.dataset.animeId;
-        if (animeId) {
-            // Fires when user clicks away or presses Enter
-            progressInput.addEventListener('blur', function () {
-                const progress = parseInt(this.value);
+    // Update Manga Progress button 
+    const mangaProgressInput = document.getElementById('mangaProgress');
+    if (mangaProgressInput) {
+        const mangaId = mangaProgressInput.dataset.mangaId;
+        // Fires when user clicks away or presses Enter
+        mangaProgressInput.addEventListener('blur', function () {
+            const mangaProgress = parseInt(this.value);
 
 
-                // Only update if there's a valid number
-                if (!isNaN(progress) && progress >= 0) {
-                    updateProgress(animeId, progress);
-                }
-            });
-        }
+            // Only update if there's a valid number
+            if (!isNaN(mangaProgress) && mangaProgress >= 0) {
+                updateMangaProgress(mangaId, mangaProgress);
+            }
+        });
 
         // Also fires when user presses Enter
-        progressInput.addEventListener('keypress', function (e) {
+        mangaProgressInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 this.blur(); // Trigger the blur event
             }
         });
     }
 
-    // Update Score buttons
-    const scoreInput = document.getElementById('score');
-    if (scoreInput) {
-        scoreInput.addEventListener('change', function () {
-            const animeId = this.dataset.animeId;
-            updateScore(animeId, parseInt(this.value));
+    // Update Manga Score buttons
+    const mangaScoreInput = document.getElementById('mangaScore');
+    if (mangaScoreInput) {
+        mangaScoreInput.addEventListener('change', function () {
+            const mangaId = this.dataset.mangaId;
+            updateMangaScore(mangaId, parseInt(this.value));
         });
     }
+
 });

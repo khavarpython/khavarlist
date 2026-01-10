@@ -117,6 +117,7 @@ body {
 .scroll-content::-webkit-scrollbar {
     display: none; 
 }
+
 .list_dropdown {
     font-size: 0.8rem; 
     background-size: 8px 8px; 

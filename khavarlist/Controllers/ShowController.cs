@@ -12,12 +12,14 @@ namespace khavarlist.Controllers
         private readonly ApiController _apiController;
         private readonly UserManager<User> _userManager;
         private readonly IAnimeService _animeService;
+        private readonly IMangaService _mangaService;
 
-        public ShowController(IHttpClientFactory httpClientFactory, UserManager<User> userManager, IAnimeService animeService)
+        public ShowController(IHttpClientFactory httpClientFactory, UserManager<User> userManager, IAnimeService animeService, IMangaService mangaService)
         {
             _apiController = new ApiController(httpClientFactory);
             _animeService = animeService;
             _userManager = userManager;
+            _mangaService = mangaService;
         }
 
         [Route("Show/Anime/{id}")]
@@ -46,11 +48,20 @@ namespace khavarlist.Controllers
         public async Task<IActionResult> Manga(int id)
         {
             var manga = await _apiController.GetMangaById(id);
+            var userId = _userManager.GetUserId(User);
+
+            if (userId == null)
+            {
+                return NotFound();
+            }
 
             if (manga == null)
             {
                 return NotFound();
             }
+
+            ViewData["AddStatus"] = await _mangaService.IsMangaInUserList(userId, id);
+            ViewData["UserDetails"] = await _mangaService.GetUserMangaDetails(userId, id);
             return View(manga);
         }
     }

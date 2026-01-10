@@ -19,6 +19,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IAnimeService, AnimeService>();
+builder.Services.AddScoped<IMangaService, MangaService>();
 
 var app = builder.Build();
 

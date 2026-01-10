@@ -42,12 +42,12 @@
                 @if (!Convert.ToBoolean(ViewData["AddStatus"]))
                 {
                     @* Add to List *@
-                    <button class="btn btn-sm btn-primary flex-grow-1" id="addToListBtn" data-anime-id="@Model.Data.MalId">
+                    <button class="btn btn-sm btn-primary flex-grow-1" id="addToMangaList" data-manga-id="@Model.Data.MalId">
                         Add to list +
                     </button>                   
                     
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="mangaStatus" data-manga-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
@@ -58,7 +58,7 @@
                 else
                 {
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="mangaStatus" id="mangaStatus" data-manga-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
@@ -68,26 +68,30 @@
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="score" data-anime-id="@Model.Data.MalId">
-                    <option disabled selected="@(userMangaDetails?.Score == 0 || userMangaDetails?.Score == null)">Select</option>
-                    <option value="1" selected="@(userMangaDetails?.Score == 1)">1</option>
-                    <option value="2" selected="@(userMangaDetails?.Score == 2)">2</option>
-                    <option value="3" selected="@(userMangaDetails?.Score == 3)">3</option>
-                    <option value="4" selected="@(userMangaDetails?.Score == 4)">4</option>
-                    <option value="5" selected="@(userMangaDetails?.Score == 5)">5</option>
-                    <option value="6" selected="@(userMangaDetails?.Score == 6)">6</option>
-                    <option value="7" selected="@(userMangaDetails?.Score == 7)">7</option>
-                    <option value="8" selected="@(userMangaDetails?.Score == 8)">8</option>
-                    <option value="9" selected="@(userMangaDetails?.Score == 9)">9</option>
-                    <option value="10" selected="@(userMangaDetails?.Score == 10)">10</option>
+                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="mangaScore" data-manga-id="@Model.Data.MalId">
+                    <option disabled selected="@(userMangaDetails?.Score == 0 || userMangaDetails?.Score == null)">
+                        Select
+                    </option>
+                    <option value="1" selected="@(userMangaDetails?.Score == 1)">1 (Terrible)</option>
+                    <option value="2" selected="@(userMangaDetails?.Score == 2)">2 (Awful)</option>
+                    <option value="3" selected="@(userMangaDetails?.Score == 3)">3 (Bad)</option>
+                    <option value="4" selected="@(userMangaDetails?.Score == 4)">4 (Poor)</option>
+                    <option value="5" selected="@(userMangaDetails?.Score == 5)">5 (Average)</option>
+                    <option value="6" selected="@(userMangaDetails?.Score == 6)">6 (Decent)</option>
+                    <option value="7" selected="@(userMangaDetails?.Score == 7)">7 (Good)</option>
+                    <option value="8" selected="@(userMangaDetails?.Score == 8)">8 (Great)</option>
+                    <option value="9" selected="@(userMangaDetails?.Score == 9)">9 (Excellent)</option>
+                    <option value="10" selected="@(userMangaDetails?.Score == 10)">10 (Masterpiece)</option>
+
                 </select>
 
                 @* Update Progress *@
-                <div class="d-flex input-group input-group-sm" style="max-width: 7rem;">
-                    <span class="align-self-center py-2 px-2 m-0 b border-end-0 text-black bg-white rounded-start" style="font-size:0.75rem;">Chapters</span>
-                    <input class="form-control form-control-sm m-0 shadow-none px-2" style="width:1.8rem;" 
-                           value="@(userMangaDetails?.Progress ?? 0)" type="number" id="progress" name="progress" min="0"
-                           max="@(Model.Data.Chapters ?? 9999)" data-anime-id="@Model.Data.MalId" />
+                <div class="d-flex input-group input-group-sm" style="max-width: 7rem; height: 31px;">
+                    <span class="align-self-center ps-2 pe-1 m-0 border border-end-0 text-black bg-white rounded-start" 
+                    style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">Chapters:</span>
+                    <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0" style="width:1.8rem; height: 31px;"
+                           value="@(userMangaDetails?.Progress ?? 0)" type="number" id="mangaProgress" name="progress" min="0"
+                           max="@(Model.Data.Chapters ?? 9999)" data-manga-id="@Model.Data.MalId" />
                 </div>
             </div>
         </div>
@@ -110,10 +114,6 @@
     }
 </div>
 
-
 @section Scripts {
-    <script src="~/js/animeList.js" asp-append-version="true">
-    </script>
-    
-    
+    <script src="~/js/manga.js" asp-append-version="true"></script>
 }
