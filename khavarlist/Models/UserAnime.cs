@@ -12,6 +12,8 @@ namespace khavarlist.Models
         public int? Progress { get; set; }
         public int? Score { get; set; }
 
+       // public int? Duration { get; set; }
+
         public User? User { get; set; } 
         public Anime? Anime { get; set; }
     }

@@ -157,5 +157,78 @@ namespace khavarlist.Controllers
                 return null;
             }
         }
+
+        // GET CURRENT SEASON ANIMES
+        public async Task<JikanAnimeList?> GetCurrentAnimes()
+        {
+            try
+            {
+                await Task.Delay(3000);
+                var url = "https://api.jikan.moe/v4/seasons/now";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanAnimeList>(content);
+                    return data;
+                }
+                return null;
+            } catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+
+        // GET ANIME RECOMMENDATIONS
+        public async Task<JikanRecommendationList?> GetRecommendations(string type)
+        {
+            try
+            {
+                var url = $"https://api.jikan.moe/v4/recommendations/{type}";
+                Console.WriteLine($"Exception: {url}");
+                var response = await _httpClient.GetAsync(url);
+                Console.WriteLine($"Exception: {response}");
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Reccs success");
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanRecommendationList>(content);
+                    return data;
+                }
+                Console.WriteLine($"fail");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+
+        // undecidicde
+        public async Task<JikanAnimeList?> GetTopReviews()
+        {
+            try
+            {
+                var url = "https://api.jikan.moe/v4/top/reviews";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanAnimeList>(content);
+                    return data;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }

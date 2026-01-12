@@ -4,14 +4,16 @@
 }
 
 <!--- Hero Div -->
-<h2 class="pt-1 mt-5"> Featured Anime</h2>
-<div class="hero"
-     style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-            url('@Url.Content("~/images/frieren.avif")');">
-    <div class="hero-text">
-        <h3>Frieren</h3>
+<h2 class="pt-1 mt-3"> Featured Anime</h2>
+<a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="52991">
+    <div class="hero"
+         style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('@Url.Content("~/images/frieren.avif")');">
+        <div class="hero-text">
+            <h3>Frieren</h3>
+        </div>
     </div>
-</div>
+</a>
 
 <!-- First Scroll Div -->
 <div>
@@ -118,7 +120,7 @@
                 {
                     <a class="text-decoration-none" asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
                         <div class="h-auto flex-shrink-0" style="width:11rem;">
-                            <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" //>
+                            <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" />
                             <div class="text-wrap">
                                 @if (manga.EnglishTitle != null)  {  <div class="text-white" style="font-size:0.8rem;margin-left:8px;"> @manga.EnglishTitle </div>  }
                                 else { <div class="text-white" style="font-size:0.8rem;margin-left:8px;">@manga.Title</div>}
@@ -142,18 +144,41 @@
     <div class="d-flex justify-content-between border-1 border-bottom border-white">
         <h5>Anime Recommendations</h5>
     </div>
+
+        @if(Model.AnimeRecs != null)
+        {
+        <div class="rounded-4 py-2 mt-3" style="background-color:#2D2D2D;">
+            <div class="d-flex justify-content-between gap-5 pt-3">
+            @foreach (var animeRec in Model.AnimeRecs.Take(3))
+            {
+                        <div class="d-flex flex-column gap-1 justify-content-center">
+                            <span class="align-self-center">If you like</span>
+                            <img class="align-self-center" src="@animeRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:14rem;" />
+                        <span style="font-size:0.7rem;" class="text-wrap">@animeRec.Entry[0].Title</span>
+                        </div>
+
+                        <div class="d-flex flex-column gap-1 justify-content-center">
+                            <span class="align-self-center">You might like</span>
+                            <img class="align-self-center" src="@animeRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:14rem;" />
+                            <span style="font-size:0.7rem;">@animeRec.Entry[1].Title</span>
+                        </div>
+
+                }
+            </div>
+        </div>
+        }
 </div>
 
 <!-- Manga Recomendation -->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
         <h5>Manga Recommendations</h5>
     </div>
 </div>
 
 <!-- Top  Reviews -->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
         <h5>Top Reviews </h5>
     </div>
 </div>

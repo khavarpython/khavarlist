@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
 document.addEventListener('DOMContentLoaded', function () {
     // Find all scroll containers
     const scrollContainers = document.querySelectorAll('.scroll-container');

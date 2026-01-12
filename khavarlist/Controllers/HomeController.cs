@@ -28,7 +28,10 @@ namespace khavarlist.Controllers
                 TopAnime = (await _apiController.GetTopAnime())?.Data,
                 TopManga = (await _apiController.GetTopManga())?.Data,
                 CurrentAnime = (await _apiController.GetCurrentAnimes())?.Data,
+                AnimeRecs= (await _apiController.GetRecommendations("anime"))?.Data,
+                MangaRecs=(await _apiController.GetRecommendations("manga"))?.Data
             };
+
             return View("Home", viewModel);
         }
 
