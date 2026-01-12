@@ -26,6 +26,9 @@ namespace khavarlist.Models
         [JsonProperty("title")]
         public required string Title { get; set; }
 
+        [JsonProperty("title_english")]
+        public required string EnglishTitle { get; set; }
+
         [JsonProperty("chapters")]
         public int? Chapters { get; set; }
 
