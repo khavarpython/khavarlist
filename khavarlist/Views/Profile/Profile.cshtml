@@ -1,0 +1,54 @@
+﻿@model ProfileView
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div>
+    <h3>Anime List</h3>
+    @if(Model.UserAnimes != null)
+    {
+        <div class="d-flex gap-2 justify-content-between">
+            <span>Image</span>
+            <span> Anime Title</span>
+            <span> Score</span>
+             <span>Progress</span>
+             <span>Status</span>
+        </div>
+        @foreach (var userAnimes in Model.UserAnimes)
+        {
+            <div class="d-flex gap-2 justify-content-between">
+                <img class="w-25" src="@userAnimes.Anime.Image" />
+                <span>@userAnimes.Anime.Title</span>
+
+                <span>@userAnimes.Score</span>
+                <span>@userAnimes.Progress</span>
+                <span>@userAnimes.WatchStatus</span>
+              
+            </div>
+        }
+    }
+
+    <h3>Manga List</h3>
+    @if(Model.UserMangas != null)
+    {
+        <div class="d-flex gap-2 justify-content-between">
+            <span>Image</span>
+            <span> Manga Title</span>
+            <span> Score</span>
+            <span>Progress</span>
+            <span>Status</span>
+        </div>
+        @foreach(var userMangas in Model.UserMangas)
+        {
+        
+            <div class="d-flex gap-2 justify-content-between">
+                <img class="w-25" src="@userMangas.Manga.Image"/>
+                <span>@userMangas.Manga.Title</span>
+        
+                <span>@userMangas.Score</span>
+                <span>@userMangas.Progress</span>
+                <span>@userMangas.ReadStatus</span>
+             </div>
+        }
+    }
+</div>

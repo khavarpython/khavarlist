@@ -1,10 +1,10 @@
-﻿@model TopMediaView
+﻿@model HomeView
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <!--- Hero Div -->
-<h2 class="pt-1 mt-3"> Top Anime</h2>
+<h2 class="pt-1 mt-5"> Featured Anime</h2>
 <div class="hero"
      style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
             url('@Url.Content("~/images/frieren.avif")');">
@@ -13,81 +13,147 @@
     </div>
 </div>
 
-<!--First Scroll Div-->
-<div class="d-flex justify-content-between border-1 border-bottom border-white">
-    <h5 >Top Anime</h5>
-    <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="AnimeSearch" method="get">More Anime</a>
-</div>
-
-<div class="scroll-container position-relative mt-1">
-    <button class="scroll-arrow scroll-arrow-left">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-    </button>
-
-    <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
-        @if (Model.TopAnime != null)
+<!-- First Scroll Div -->
+<div>
+    <div class="d-flex justify-content-between border-1 border-bottom mt-2" style="border-bottom-color:#FF7A00">
+        @if (Model.CurrentAnime != null)
         {
-            @foreach (var anime in Model.TopAnime)
-            {
-                <a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="@anime.MalId">
-                    <div class="h-auto flex-shrink-0" style="width:11rem;">
-                        <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                        <div class="text-wrap">
-                            <div class="text-white" style="font-size:0.8rem;margin-left:8px;">
-                                @anime.Title
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            }
+            <h5 class="text-capitalize">@Model.CurrentAnime[0].Season @Model.CurrentAnime[0].Year</h5>
         }
     </div>
 
-    <button class="scroll-arrow scroll-arrow-right">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-    </button>
-</div>
+    <div class="scroll-container position-relative mt-1">
+        <button class="scroll-arrow scroll-arrow-left">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
 
-<!-- Second Scroll Div -->
-<div class="d-flex justify-content-between border-1 border-bottom border-white">
-    <h5>Top Manga</h5>
-    <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="MangaSearch" method="get">More Manga</a>
-</div>
-
-<div class="scroll-container position-relative mt-1">
-    <button class="scroll-arrow scroll-arrow-left">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-    </button>
-
-    <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
-        @if(Model.TopManga != null)
-        {
-            @foreach (var manga in Model.TopManga)
+        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+            @if (Model.CurrentAnime != null)
             {
-                <a class="text-decoration-none" asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
-                    <div class="h-auto flex-shrink-0" style="width:11rem;">
-                        <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" />
-                        <div class="text-wrap">
-                            <div class="text-white" style="font-size:0.8rem;margin-left:8px;">
-                                @manga.Title
+                @foreach (var anime in Model.CurrentAnime)
+                {
+                    <a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="@anime.MalId">
+                        <div class="h-auto flex-shrink-0" style="width:11rem;">
+                            <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" />
+                            <div class="text-wrap">
+                                @if (anime.EnglishTitle != null)  {  <div class="text-white" style="font-size:0.8rem;margin-left:8px;"> @anime.EnglishTitle </div>  }
+                                else { <div class="text-white" style="font-size:0.8rem;margin-left:8px;">@anime.Title</div>}
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                }
             }
-        }
-    </div>
+        </div>
 
-    <button class="scroll-arrow scroll-arrow-right">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-    </button>
+        <button class="scroll-arrow scroll-arrow-right">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
 </div>
 
+
+<!--Second Scroll Div-->
+<div>
+    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
+        <h5>Top Anime</h5>
+        <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="AnimeSearch" method="get">More Anime</a>
+    </div>
+
+    <div class="scroll-container position-relative mt-1">
+        <button class="scroll-arrow scroll-arrow-left">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+            @if (Model.TopAnime != null)
+            {
+                @foreach (var anime in Model.TopAnime)
+                {
+                    <a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="@anime.MalId">
+                        <div class="h-auto flex-shrink-0" style="width:11rem;">
+                            <img src="@anime.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" />
+                            <div class="text-wrap">
+                                @if (anime.EnglishTitle != null)  {  <div class="text-white" style="font-size:0.8rem;margin-left:8px;"> @anime.EnglishTitle </div>  }
+                                else { <div class="text-white" style="font-size:0.8rem;margin-left:8px;">@anime.Title</div>}
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+
+        <button class="scroll-arrow scroll-arrow-right">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+</div>
+
+<!-- Third Scroll Div -->
+<div>
+    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-2">
+        <h5>Top Manga</h5>
+        <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="MangaSearch" method="get">More Manga</a>
+    </div>
+
+    <div class="scroll-container position-relative my-1">
+        <button class="scroll-arrow scroll-arrow-left">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+            @if (Model.TopManga != null)
+            {
+                @foreach (var manga in Model.TopManga)
+                {
+                    <a class="text-decoration-none" asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
+                        <div class="h-auto flex-shrink-0" style="width:11rem;">
+                            <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" //>
+                            <div class="text-wrap">
+                                @if (manga.EnglishTitle != null)  {  <div class="text-white" style="font-size:0.8rem;margin-left:8px;"> @manga.EnglishTitle </div>  }
+                                else { <div class="text-white" style="font-size:0.8rem;margin-left:8px;">@manga.Title</div>}
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+
+        <button class="scroll-arrow scroll-arrow-right">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<!-- Anime Recomendation -->
+<div class="mt-1">
+    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+        <h5>Anime Recommendations</h5>
+    </div>
+</div>
+
+<!-- Manga Recomendation -->
+<div>
+    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+        <h5>Manga Recommendations</h5>
+    </div>
+</div>
+
+<!-- Top  Reviews -->
+<div>
+    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+        <h5>Top Reviews </h5>
+    </div>
+</div>

@@ -23,10 +23,11 @@ namespace khavarlist.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var viewModel = new TopMediaView
+            var viewModel = new HomeView
             {
                 TopAnime = (await _apiController.GetTopAnime())?.Data,
-                TopManga = (await _apiController.GetTopManga())?.Data
+                TopManga = (await _apiController.GetTopManga())?.Data,
+                CurrentAnime = (await _apiController.GetCurrentAnimes())?.Data,
             };
             return View("Home", viewModel);
         }
