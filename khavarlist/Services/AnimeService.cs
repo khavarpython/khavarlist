@@ -71,13 +71,12 @@ namespace khavarlist.Services
             return userAnime;
         }
 
-
         public async Task<List<UserAnime>> GetUserAnimes(string userId)
         {
             return await _context.UserAnimes
-            .Include(ua => ua.Anime)
-            .Where(ua => ua.UserId == userId)
-            .ToListAsync();
+                .Where(ua => ua.UserId == userId)
+                .Include(ua => ua.Anime)
+                .ToListAsync();
         }
 
         public async Task RemoveAnimeFromList(string userId, int animeId)

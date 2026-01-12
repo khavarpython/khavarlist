@@ -71,13 +71,12 @@ namespace khavarlist.Services
             return userManga;
         }
 
-
         public async Task<List<UserManga>> GetUserMangas(string userId)
         {
             return await _context.UserMangas
-            .Include(um => um.Manga)
-            .Where(um => um.UserId == userId)
-            .ToListAsync();
+                .Where(um => um.UserId == userId)
+                .Include(um => um.Manga)
+                .ToListAsync();
         }
 
         public async Task RemoveMangaFromList(string userId, int mangaId)

@@ -13,6 +13,13 @@ namespace khavarlist.Controllers
         {
             _apiController = new ApiController(httpClientFactory);
         }
+        public IActionResult Search(string searchType, string query)
+        {
+            if (searchType == "anime")
+                return RedirectToAction("AnimeSearch", new { query });
+            else
+                return RedirectToAction("MangaSearch", new { query });
+        }
 
         public async Task<IActionResult> AnimeSearch(string query, int id = 1)
         {
