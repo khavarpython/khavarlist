@@ -4,23 +4,22 @@
 }
 
 <!--- Hero Div -->
-<h2 class="pt-1 mt-3"> Featured Anime</h2>
+<h2 class="pt-1 mt-3 text-center fw-bolder"> Featured Anime</h2>
+
 <a class="text-decoration-none" asp-controller="Show" asp-action="Anime" asp-route-id="52991">
-    <div class="hero"
-         style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-                url('@Url.Content("~/images/frieren.avif")');">
+    <div class="hero">
         <div class="hero-text">
-            <h3>Frieren</h3>
+            <h3 class="fw-bold">Frieren</h3>
         </div>
     </div>
 </a>
 
 <!-- First Scroll Div -->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom mt-2" style="border-bottom-color:#FF7A00">
+    <div class="br-orange d-flex justify-content-between mt-2">
         @if (Model.CurrentAnime != null)
         {
-            <h5 class="text-capitalize">@Model.CurrentAnime[0].Season @Model.CurrentAnime[0].Year</h5>
+            <h5 class="text-capitalize">@Model.CurrentAnime[0].Season @Model.CurrentAnime[0].Year Anime</h5>
         }
     </div>
 
@@ -60,9 +59,9 @@
 
 <!--Second Scroll Div-->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
+    <div class="br-orange d-flex justify-content-between mt-1">
         <h5>Top Anime</h5>
-        <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="AnimeSearch" method="get">More Anime</a>
+        <a class="text-white small h-50 align-self-end" asp-controller="Search" asp-action="AnimeSearch" method="get">More Anime</a>
     </div>
 
     <div class="scroll-container position-relative mt-1">
@@ -101,9 +100,9 @@
 
 <!-- Third Scroll Div -->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-2">
+    <div class="br-orange d-flex justify-content-between mt-1">
         <h5>Top Manga</h5>
-        <a class="text-decoration-none text-white small h-50 align-self-end" asp-controller="Search" asp-action="MangaSearch" method="get">More Manga</a>
+        <a class="text-white small h-50 align-self-end" asp-controller="Search" asp-action="MangaSearch" method="get">More Manga</a>
     </div>
 
     <div class="scroll-container position-relative my-1">
@@ -118,7 +117,7 @@
             {
                 @foreach (var manga in Model.TopManga)
                 {
-                    <a class="text-decoration-none" asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
+                    <a class="text-decoration-none " asp-controller="Show" asp-action="Manga" asp-route-id="@manga.MalId">
                         <div class="h-auto flex-shrink-0" style="width:11rem;">
                             <img src="@manga.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" />
                             <div class="text-wrap">
@@ -139,46 +138,91 @@
     </div>
 </div>
 
-<!-- Anime Recomendation -->
-<div class="mt-1">
-    <div class="d-flex justify-content-between border-1 border-bottom border-white">
+<!-- Anime Recommendation -->
+<div class="mt-3">
+    <div class="br-orange d-flex justify-content-between">
         <h5>Anime Recommendations</h5>
     </div>
 
         @if(Model.AnimeRecs != null)
         {
-        <div class="rounded-4 py-2 mt-3" style="background-color:#2D2D2D;">
-            <div class="d-flex justify-content-between gap-5 pt-3">
+        <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
+            <div class="d-flex justify-content-around gap-3 pt-3">
             @foreach (var animeRec in Model.AnimeRecs.Take(3))
-            {
-                        <div class="d-flex flex-column gap-1 justify-content-center">
-                            <span class="align-self-center">If you like</span>
-                            <img class="align-self-center" src="@animeRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:14rem;" />
-                        <span style="font-size:0.7rem;" class="text-wrap">@animeRec.Entry[0].Title</span>
+                {
+                    <div class="d-flex justify-content-around align-items-start gap-2">
+                        <div class="d-flex flex-column gap-1 justify-content-start" style="width:9rem;">
+                            <span class="text-center " style="color:#FF7A00;font-weight:bold">If You Like</span>
+
+                            <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Anime" asp-route-id="@animeRec.Entry[0].MalId">
+                                <img class="align-self-center object-fit-cover rounded-2" src="@animeRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
+                                <span class="w-100 text-wrap text-center text-white" style="font-size:0.7rem;">
+                                    @animeRec.Entry[0].Title
+                                </span>
+                            </a>
                         </div>
 
-                        <div class="d-flex flex-column gap-1 justify-content-center">
-                            <span class="align-self-center">You might like</span>
-                            <img class="align-self-center" src="@animeRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:14rem;" />
-                            <span style="font-size:0.7rem;">@animeRec.Entry[1].Title</span>
-                        </div>
+                        <div class="d-flex flex-column gap-1 justify-content-center" style="width:9rem;">
+                            <span class="text-center" style="color:#FF7A00;font-weight:bold">You Might like</span>
 
+                            <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Anime" asp-route-id="@animeRec.Entry[1].MalId">
+                                <img class="align-self-center object-fit-cover rounded-2" src="@animeRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
+                                <span class="text-wrap text-white text-center mx-1" style="font-size:0.7rem;">
+                                    @animeRec.Entry[1].Title
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
         }
 </div>
 
-<!-- Manga Recomendation -->
-<div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
+<!-- Manga Recommendation -->
+<div class="mt-3">
+    <div class="br-orange d-flex justify-content-between">
         <h5>Manga Recommendations</h5>
     </div>
+
+    @if (Model.MangaRecs != null)
+    {
+        <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
+            <div class="d-flex justify-content-around gap-3 pt-3">
+                @foreach (var mangaRec in Model.MangaRecs.Take(3))
+                {
+                    <div class="d-flex justify-content-around align-items-start gap-2">
+                        <div class="d-flex flex-column gap-1 justify-content-start" style="width:9rem;">
+                            <span class="text-center" style="color:#FF7A00;font-weight:bold">If You Like</span>
+
+                            <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Manga" asp-route-id="@mangaRec.Entry[0].MalId">
+                                <img class="align-self-center object-fit-cover rounded-2" src="@mangaRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
+                                <span class="w-100 text-wrap text-center text-white" style="font-size:0.7rem;">
+                                    @mangaRec.Entry[0].Title
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="d-flex flex-column gap-1 justify-content-center" style="width:9rem;">
+                            <span class="text-center" style="color:#FF7A00;font-weight:bold">You Might Like</span>
+
+                            <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Manga" asp-route-id="@mangaRec.Entry[1].MalId">
+                                <img class="align-self-center object-fit-cover rounded-2" src="@mangaRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
+                                <span class="text-wrap text-white text-center mx-1" style="font-size:0.7rem;">
+                                    @mangaRec.Entry[1].Title
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 </div>
 
 <!-- Top  Reviews -->
 <div>
-    <div class="d-flex justify-content-between border-1 border-bottom border-white mt-1">
+    <div class="br-orange d-flex justify-content-between mt-3">
         <h5>Top Reviews </h5>
     </div>
 </div>

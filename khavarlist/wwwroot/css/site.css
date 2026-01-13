@@ -55,6 +55,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/frieren.avif');
 }
 
 .hero-text {
@@ -123,4 +124,11 @@ body {
     background-size: 8px 8px; 
     background-position: right 0.25rem center;
     padding-right: 1rem;
+}
+.br-orange {
+    border-bottom: 2px solid #FF7A00;
+    color: #FF7A00;
+}
+.br-orange h5 {
+     font-weight: 800;
 }
