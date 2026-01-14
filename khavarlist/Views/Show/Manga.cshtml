@@ -88,7 +88,10 @@
                 @* Update Progress *@
                 <div class="d-flex input-group input-group-sm" style="max-width: 7rem; height: 31px;">
                     <span class="align-self-center ps-2 pe-1 m-0 border border-end-0 text-black bg-white rounded-start" 
-                    style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">Chapters:</span>
+                    style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">
+                    Chapters:
+                    </span>
+
                     <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0" style="width:1.8rem; height: 31px;"
                            value="@(userMangaDetails?.Progress ?? 0)" type="number" id="mangaProgress" name="progress" min="0"
                            max="@(Model.Data.Chapters ?? 9999)" data-manga-id="@Model.Data.MalId" />
