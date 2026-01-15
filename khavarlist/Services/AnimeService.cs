@@ -79,6 +79,16 @@ namespace khavarlist.Services
                 .ToListAsync();
         }
 
+        public async Task<UserAnime> GetUserAnimeDetails(string userId, int animeId)
+        {
+            var existing = await _context.UserAnimes
+                .Include(ua => ua.Anime)
+                .FirstOrDefaultAsync(ua => ua.UserId == userId && ua.AnimeId == animeId);
+
+            return existing;
+
+        }
+
         public async Task<AnimeStats> GetUserAnimeStats(string userId)
         {
             var userAnimes = await _context.UserAnimes
@@ -104,22 +114,12 @@ namespace khavarlist.Services
                                 ? (double)userAnimes.Where(ua => ua.Score > 0)
                                                 .Average(ua => ua.Score ?? 0): 0,2),
 
-                Days = Math.Round((double)(userAnimes.Sum(ua => (ua.Progress ?? 0) * (ua.Duration ?? 0)) / 1440.0),2)
+                Days = Math.Round((double)(userAnimes.Sum(ua => ua.Duration ?? 0) / 1440.0), 2)
             };
 
             return animeStats;
         }
-        public async Task RemoveAnimeFromList(string userId, int animeId)
-        {
-            var userAnime = await _context.UserAnimes
-                .FirstOrDefaultAsync(ua => ua.UserId == userId && ua.AnimeId == animeId);
 
-            if (userAnime != null)
-            {
-                _context.UserAnimes.Remove(userAnime);
-                await _context.SaveChangesAsync();
-            }
-        }
 
         public async Task UpdateAnimeStatus(string userId, int animeId, string WatchStatus)
         {
@@ -170,6 +170,7 @@ namespace khavarlist.Services
                 await _context.SaveChangesAsync();
             }
         }
+
         public async Task<bool> IsAnimeInUserList(string userId, int animeId)
         {
             return await _context.UserAnimes
@@ -177,15 +178,18 @@ namespace khavarlist.Services
         
         }
 
-        public async Task<UserAnime> GetUserAnimeDetails(string userId, int animeId)
+        public async Task RemoveAnimeFromList(string userId, int animeId)
         {
-            var existing = await _context.UserAnimes
-                .Include(ua => ua.Anime) 
+            var userAnime = await _context.UserAnimes
                 .FirstOrDefaultAsync(ua => ua.UserId == userId && ua.AnimeId == animeId);
 
-            return existing;
-        
+            if (userAnime != null)
+            {
+                _context.UserAnimes.Remove(userAnime);
+                await _context.SaveChangesAsync();
+            }
         }
+
         public int ParseDuration(string duration)
         {
             int totalMinutes = 0;

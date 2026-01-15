@@ -147,7 +147,7 @@
         @if(Model.AnimeRecs != null)
         {
         <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
-            <div class="d-flex justify-content-around gap-3 pt-3">
+            <div class="d-flex flex-column flex-lg-row justify-content-around gap-3 pt-3">
             @foreach (var animeRec in Model.AnimeRecs.Take(3))
                 {
                     <div class="d-flex justify-content-around align-items-start gap-2">
@@ -188,7 +188,7 @@
     @if (Model.MangaRecs != null)
     {
         <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
-            <div class="d-flex justify-content-around gap-3 pt-3">
+            <div class="d-flex flex-column flex-lg-row  justify-content-around gap-3 pt-3">
                 @foreach (var mangaRec in Model.MangaRecs.Take(3))
                 {
                     <div class="d-flex justify-content-around align-items-start gap-2">

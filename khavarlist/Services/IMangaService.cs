@@ -6,6 +6,7 @@ namespace khavarlist.Services
     {
         Task<Manga?> GetOrCreateManga(int apiMangaId);
         Task<List<UserManga>> GetUserMangas(string userId);
+        Task<MangaStats> GetUserMangaStats(string userId);
         Task<UserManga> AddMangaToList(string userId, int apiMangaId, string readStatus);
         Task UpdateMangaStatus(string userId, int mangaId, string readStatus);
         Task UpdateMangaProgress(string userId, int mangaId, int chaptersRead);

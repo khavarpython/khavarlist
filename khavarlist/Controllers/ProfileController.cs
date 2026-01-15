@@ -26,7 +26,7 @@ namespace khavarlist.Controllers
                 UserMangas = await _mangaService.GetUserMangas(userId),
                 UserAnimes = await _animeService.GetUserAnimes(userId),
                 AnimeStats = await _animeService.GetUserAnimeStats(userId),
-               // MangaStats = await _animeService.GetUserMangaStats(userId)
+                MangaStats = await _mangaService.GetUserMangaStats(userId)
             };
             return View("Profile", viewModel);
         }

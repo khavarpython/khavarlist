@@ -34,7 +34,7 @@ html {
 body {
   background-color: #1F1F1F;
   min-height:100vh;
-  margin-bottom:30rem;
+  margin-bottom:20rem;
   color:white;
 }
 
@@ -161,4 +161,8 @@ input[type="number"] {
 
 .orange {
     color: #FF7A00;
+}
+.small-pg {
+    text-align: justify;
+    font-size: 0.8rem;
 }

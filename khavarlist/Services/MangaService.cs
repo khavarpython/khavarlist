@@ -78,17 +78,45 @@ namespace khavarlist.Services
                 .Include(um => um.Manga)
                 .ToListAsync();
         }
-
-        public async Task RemoveMangaFromList(string userId, int mangaId)
+        public async Task<UserManga> GetUserMangaDetails(string userId, int mangaId)
         {
-            var userManga = await _context.UserMangas
+            var existing = await _context.UserMangas
+                .Include(um => um.Manga)
                 .FirstOrDefaultAsync(um => um.UserId == userId && um.MangaId == mangaId);
 
-            if (userManga != null)
+            return existing;
+
+        }
+
+        public async Task<MangaStats> GetUserMangaStats(string userId)
+        {
+            var userMangas = await _context.UserMangas
+                .Where(um => um.UserId == userId)
+                .Include(um => um.Manga)
+                .ToListAsync();
+
+            var mangaStats = new MangaStats
             {
-                _context.UserMangas.Remove(userManga);
-                await _context.SaveChangesAsync();
-            }
+                // Status counts
+                Reading = userMangas.Count(um => um.ReadStatus == "Reading"),
+                Completed = userMangas.Count(um => um.ReadStatus == "Completed"),
+                OnHold = userMangas.Count(um => um.ReadStatus == "On_Hold"),
+                Dropped = userMangas.Count(um => um.ReadStatus == "Dropped"),
+                PlanToRead = userMangas.Count(um => um.ReadStatus == "Plan_To_Read"),
+
+                // Total episodes watched
+                TotalChapters = userMangas.Sum(um => um.Progress ?? 0),
+
+                // Average score (excluding 0/null scores)
+                AverageScore = Math.Round(userMangas.Where(um => um.Score > 0)
+                                          .Any()
+                                ? (double)userMangas.Where(um => um.Score > 0)
+                                                .Average(um => um.Score ?? 0) : 0, 2),
+
+                Days = Math.Round((double)(userMangas.Sum(um => um.Duration ?? 0) / 1440.0), 2)
+            };
+
+            return mangaStats;
         }
 
         public async Task UpdateMangaStatus(string userId, int mangaId, string readStatus)
@@ -113,7 +141,7 @@ namespace khavarlist.Services
             if (userManga != null)
             {
                 userManga.Progress = chaptersRead;
-
+                userManga.Duration = chaptersRead * 8;
                 if (userManga.Manga.TotalChapters.HasValue &&
                     chaptersRead >= userManga.Manga.TotalChapters.Value)
                 {
@@ -142,15 +170,16 @@ namespace khavarlist.Services
             .AnyAsync(um => um.UserId == userId && um.MangaId == mangaId);
 
         }
-
-        public async Task<UserManga> GetUserMangaDetails(string userId, int mangaId)
+        public async Task RemoveMangaFromList(string userId, int mangaId)
         {
-            var existing = await _context.UserMangas
-                .Include(um => um.Manga)
+            var userManga = await _context.UserMangas
                 .FirstOrDefaultAsync(um => um.UserId == userId && um.MangaId == mangaId);
 
-            return existing;
-
+            if (userManga != null)
+            {
+                _context.UserMangas.Remove(userManga);
+                await _context.SaveChangesAsync();
+            }
         }
 
     }

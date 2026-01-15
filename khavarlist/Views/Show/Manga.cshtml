@@ -5,70 +5,71 @@
 }
 @Html.AntiForgeryToken()
 
-<div class="mt-3">
-    <h3>@Model.Data.Title</h3>
+<div class="mt-4 w-50">
+    <h3 class="text-wrap fw-bold">@Model.Data.Title</h3>
 </div>
 
 <div>
-    <div class="d-flex gap-4 justify-content-between">
-        <div style="width:20rem;">
-            <img src="@Model.Data.Images.Jpg.ImageUrl" class="" />
-            <div class="d-flex flex-wrap gap-1">
+    <div class="d-flex gap-4">
+        <div style="width:14.1rem;">
+            <img src="@Model.Data.Images.Jpg.ImageUrl"/>
+            <div class="d-flex flex-wrap gap-2 ">
                 @if(Model.Data.Genres != null)
                 {
-                    @foreach(var genre in Model.Data.Genres)
+                    @foreach (var genre in Model.Data.Genres)
                     {
-                        <span class="border-1 border-light rounded-3 p-1 my-1 fw-bold" style="font-size:0.8rem;background-color:dimgray">@genre.Name</span>
+                        <span class="border-1 border-light rounded-2 p-2 my-1 fw-semibold bg-orange" style="font-size:0.8rem;">@genre.Name</span>
+
                     }
                 }
             </div>
+
+            <<div class="d-flex gap-1 justify-content-evenly text-muted mt-1" style="font-size:0.75rem;">
+                @if(Model.Data.Status != null){<span class="orange">@Model.Data.Status</span>}
+                @if(Model.Data.Chapters != null){<span class="orange"> Chapters: @Model.Data.Chapters </span>}
+                @if(Model.Data.Type != null){<span class="orange"> @Model.Data.Type</span>}
+            </div>
         </div>
         
-        <div class="" style="width:28rem">
-            <div class="d-flex gap-1 justify-content-center">
-                <span>@Model.Data.Status</span>
-                <span>@Model.Data.Chapters Chapters</span>
-                <span>@Model.Data.Type</span>
-            </div>
-        </div>
 
-        <div class="d-flex flex-column gap-4" style="width:21rem">
-            <div class="w-100 d-flex justify-content-between gap-3 mb-1 border border-light border-1 p-1" style="font-size:0.8rem">
-                <span>Rank: @Model.Data.Rank</span>
-                <span>Score: @Model.Data.Score</span>
+        <div class="d-flex flex-column gap-1" style="width:30rem">
+
+            <div class="w-100 d-flex justify-content-between gap-3 my-1 border border-light border-1 p-1" style="font-size:0.8rem">
+                @if(Model.Data.Rank != null){ <span>Rank: @Model.Data.Rank</span>}
+                @if(Model.Data.Score != null){<span>Score: @Model.Data.Score</span>}
             </div>
 
-            <div class="d-flex gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
+            <div class="d-flex flex-column flex-md-row gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
                 @if (!Convert.ToBoolean(ViewData["AddStatus"]))
                 {
                     @* Add to List *@
-                    <button class="btn btn-sm btn-primary flex-grow-1" id="addToMangaList" data-manga-id="@Model.Data.MalId">
-                        Add to list +
+                    <button class="btn btn-sm bg-orange flex-grow-1" id="addToMangaList" data-manga-id="@Model.Data.MalId">
+                        Add to list
                     </button>                   
                     
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="mangaStatus" data-manga-id="@Model.Data.MalId">
-                        <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
+                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;display:none;" name="status" id="mangaStatus" data-manga-id="@Model.Data.MalId">
+                        <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Reading")">Reading</option>
                         <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
                         <option value="Dropped" selected="@(userMangaDetails?.ReadStatus == "Dropped")">Dropped</option>
-                        <option value="Plan_To_Watch" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Watch")">Plan to Watch</option>
+                        <option value="Plan_To_Watch" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Read")">Plan to Watch</option>
                     </select>
                 }
                 else
                 {
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="mangaStatus" id="mangaStatus" data-manga-id="@Model.Data.MalId">
-                        <option value="Watching" selected="@(userMangaDetails?.ReadStatus == "Watching")">Watching</option>
+                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;" name="mangaStatus" id="mangaStatus" data-manga-id="@Model.Data.MalId">
+                        <option value="Reading" selected="@(userMangaDetails?.ReadStatus == "Reading")">Reading</option>
                         <option value="Completed" selected="@(userMangaDetails?.ReadStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userMangaDetails?.ReadStatus == "On_Hold")">On Hold</option>
                         <option value="Dropped" selected="@(userMangaDetails?.ReadStatus == "Dropped")">Dropped</option>
-                        <option value="Plan_To_Watch" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Watch")">Plan to Watch</option>
+                        <option value="Plan_To_Read" selected="@(userMangaDetails?.ReadStatus == "Plan_To_Read")">Plan to Read</option>
                     </select>
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="mangaScore" data-manga-id="@Model.Data.MalId">
+                <select class="form-select form-select-sm list-dropdown" style="width:7rem;" name="score" id="mangaScore" data-manga-id="@Model.Data.MalId">
                     <option disabled selected="@(userMangaDetails?.Score == 0 || userMangaDetails?.Score == null)">
                         Select
                     </option>
@@ -86,33 +87,34 @@
                 </select>
 
                 @* Update Progress *@
-                <div class="d-flex input-group input-group-sm" style="max-width: 7rem; height: 31px;">
-                    <span class="align-self-center ps-2 pe-1 m-0 border border-end-0 text-black bg-white rounded-start" 
-                    style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">
+                <div class="d-flex input-group input-group-sm" style="max-width:9rem;height:31px;">
+                    <span class ="align-self-center ps-2 pe-1 m-0 border border-end-0 text-black bg-white rounded-start"
+                               style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">
                     Chapters:
                     </span>
 
-                    <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0" style="width:1.8rem; height: 31px;"
+                    <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0"
+                           style="width:2.5rem; height: 31px;"
                            value="@(userMangaDetails?.Progress ?? 0)" type="number" id="mangaProgress" name="progress" min="0"
                            max="@(Model.Data.Chapters ?? 9999)" data-manga-id="@Model.Data.MalId" />
                 </div>
             </div>
         </div>
     </div>
-    
-    @if(Model.Data.Synopsis != null)
+
+    @if (!string.IsNullOrEmpty(Model.Data.Synopsis))
     {
     <div class="mt-5">
-        <h6 class="border-bottom border-light"> Synopsis </h6>
-        <p style="text-align: justify;">@Model.Data.Synopsis</p>
+        <h6 class="br-orange"> Synopsis </h6>
+        <p class="mx-2 small-pg">@Model.Data.Synopsis</p>
     </div>
     }
 
-    @if(Model.Data.Background != null)
+    @if (!string.IsNullOrEmpty(Model.Data.Background))
     {
         <div class="mt-5">
-            <h6 class="border-bottom border-light"> Background </h6>
-            <p style="text-align: justify;">@Model.Data.Background</p>
+            <h6 class="br-orange"> Background </h6>
+            <p class="mx-2 small-pg">@Model.Data.Background</p>
         </div>
     }
 </div>
