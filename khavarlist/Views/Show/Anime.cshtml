@@ -73,7 +73,7 @@
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:7rem;"  name="score" id="score" data-anime-id="@Model.Data.MalId">
+                <select class="form-select form-select-sm list-dropdown" style="width:7.5rem;"  name="score" id="score" data-anime-id="@Model.Data.MalId">
                     <option disabled selected="@(userAnimeDetails?.Score == 0 || userAnimeDetails?.Score == null)">
                         Select
                     </option>
@@ -99,8 +99,15 @@
 
                     <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0"
                            style="width:2.5rem; height: 31px;"
-                           value="@(userAnimeDetails?.Progress ?? 0)" type="number" id="progress" name="progress" min="0"
-                           max="@(Model.Data.Episodes ?? 9999)" data-anime-id="@Model.Data.MalId" data-duration="@Model.Data.Duration" />
+                           value="@(userAnimeDetails?.Progress ?? 0)"
+                           type="number"
+                           id="progress"
+                           name="progress"
+                           min="0"
+                           max="@(Model.Data.Episodes ?? 9999)"
+                           data-anime-id="@Model.Data.MalId"
+                           data-duration="@Model.Data.Duration"
+                           oninput="this.value = Math.max(0, Math.min(@(Model.Data.Episodes ?? 9999), parseInt(this.value) || 0))" />
                 </div>
             </div>
         </div>

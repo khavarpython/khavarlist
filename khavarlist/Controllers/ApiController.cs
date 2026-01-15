@@ -207,6 +207,31 @@ namespace khavarlist.Controllers
             }
         }
 
+        public async Task<JikanMangaCharacters?> GetMangaCharacters(int id)
+        {
+            try
+            {
+                
+                var url = $"https://api.jikan.moe/v4/manga/{id}/characters";
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<JikanMangaCharacters>(content);
+                    return data;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
+
+
         // undecidicde
         public async Task<JikanAnimeList?> GetTopReviews()
         {

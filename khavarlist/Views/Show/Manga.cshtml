@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = Model.Data.Title ;
     var userMangaDetails = ViewData["UserDetails"] as UserManga;
+    var mangaCharacters = ViewData["MangaCharacters"] as JikanMangaCharacters;
 }
 @Html.AntiForgeryToken()
 
@@ -17,23 +18,19 @@
                 @if(Model.Data.Genres != null)
                 {
                     @foreach (var genre in Model.Data.Genres)
-                    {
-                        <span class="border-1 border-light rounded-2 p-2 my-1 fw-semibold bg-orange" style="font-size:0.8rem;">@genre.Name</span>
-
-                    }
+                    {<span class="border-1 border-light rounded-2 p-1 mt-1 fw-semibold bg-orange" style="font-size:0.8rem;">@genre.Name</span>}
                 }
             </div>
 
-            <<div class="d-flex gap-1 justify-content-evenly text-muted mt-1" style="font-size:0.75rem;">
-                @if(Model.Data.Status != null){<span class="orange">@Model.Data.Status</span>}
-                @if(Model.Data.Chapters != null){<span class="orange"> Chapters: @Model.Data.Chapters </span>}
-                @if(Model.Data.Type != null){<span class="orange"> @Model.Data.Type</span>}
+            <div class="d-flex gap-1 text-muted mt-1" style="font-size:0.75rem;">
+                @if(Model.Data.Status != null){<span class="orange fw-semibold">@Model.Data.Status</span>}
+                @if(Model.Data.Chapters != null){<span class="orange fw-semibold"> Chapters: @Model.Data.Chapters </span>}
+                @if(Model.Data.Type != null){<span class="orange fw-semibold"> @Model.Data.Type</span>}
             </div>
         </div>
         
 
-        <div class="d-flex flex-column gap-1" style="width:30rem">
-
+        <div class="d-flex flex-column gap-1 border-2 border-top border-white" style="width:30rem">
             <div class="w-100 d-flex justify-content-between gap-3 my-1 border border-light border-1 p-1" style="font-size:0.8rem">
                 @if(Model.Data.Rank != null){ <span>Rank: @Model.Data.Rank</span>}
                 @if(Model.Data.Score != null){<span>Score: @Model.Data.Score</span>}
@@ -69,7 +66,7 @@
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:7rem;" name="score" id="mangaScore" data-manga-id="@Model.Data.MalId">
+                <select class="form-select form-select-sm list-dropdown" style="width:7.5rem;" name="score" id="mangaScore" data-manga-id="@Model.Data.MalId">
                     <option disabled selected="@(userMangaDetails?.Score == 0 || userMangaDetails?.Score == null)">
                         Select
                     </option>
@@ -95,20 +92,27 @@
 
                     <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0"
                            style="width:2.5rem; height: 31px;"
-                           value="@(userMangaDetails?.Progress ?? 0)" type="number" id="mangaProgress" name="progress" min="0"
-                           max="@(Model.Data.Chapters ?? 9999)" data-manga-id="@Model.Data.MalId" />
+                           value="@(userMangaDetails?.Progress ?? 0)"
+                           type="number"
+                           id="mangaProgress"
+                           name="progress"
+                           min="0"
+                           max="@(Model.Data.Chapters ?? 9999)"
+                           data-manga-id="@Model.Data.MalId"
+                           oninput="this.value = Math.max(0, Math.min(@(Model.Data.Chapters ?? 9999), parseInt(this.value) || 0))" />
                 </div>
             </div>
+
+            @if (!string.IsNullOrEmpty(Model.Data.Synopsis))
+            {
+                <div class="mt-5">
+                    <h6 class="br-orange"> Synopsis </h6>
+                    <p class="mx-2 small-pg">@Model.Data.Synopsis</p>
+                </div>
+            }
         </div>
     </div>
 
-    @if (!string.IsNullOrEmpty(Model.Data.Synopsis))
-    {
-    <div class="mt-5">
-        <h6 class="br-orange"> Synopsis </h6>
-        <p class="mx-2 small-pg">@Model.Data.Synopsis</p>
-    </div>
-    }
 
     @if (!string.IsNullOrEmpty(Model.Data.Background))
     {
@@ -117,6 +121,48 @@
             <p class="mx-2 small-pg">@Model.Data.Background</p>
         </div>
     }
+
+    <div>
+        <div class="br-orange d-flex justify-content-between mt-2">
+            @if (mangaCharacters != null)
+            {
+                <h5 class="text-capitalize">Characters</h5>
+            }
+        </div>
+
+        <div class="scroll-container position-relative mt-1">
+            <button class="scroll-arrow scroll-arrow-left">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+                @if (mangaCharacters != null)
+                {
+                    @foreach (var mangaChar in mangaCharacters.Data)
+                    {
+                        <a class="text-decoration-none" href="@mangaChar.character.Url" >
+                            <h2 class="text-white fw-bold"> @mangaChar.role</h2>
+                            <div class="h-auto flex-shrink-0" style="width:11rem;">
+                                
+                                <img src="@mangaChar.character.Images.Jpg.ImageUrl" style="width:11rem;height:16rem;" loading="lazy" />
+                                <div class="text-wrap text-center text-white">
+                                    @mangaChar.character.Name
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <button class="scroll-arrow scroll-arrow-right">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

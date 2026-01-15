@@ -62,6 +62,7 @@ namespace khavarlist.Controllers
 
             ViewData["AddStatus"] = await _mangaService.IsMangaInUserList(userId, id);
             ViewData["UserDetails"] = await _mangaService.GetUserMangaDetails(userId, id);
+            ViewData["MangaCharacters"] = await _apiController.GetMangaCharacters(id);
             return View(manga);
         }
     }
