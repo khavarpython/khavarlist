@@ -79,6 +79,36 @@ namespace khavarlist.Services
                 .ToListAsync();
         }
 
+        public async Task<AnimeStats> GetUserAnimeStats(string userId)
+        {
+            var userAnimes = await _context.UserAnimes
+                .Where(ua => ua.UserId == userId)
+                .Include(ua => ua.Anime)
+                .ToListAsync();
+
+            var animeStats = new AnimeStats
+            {
+                // Status counts
+                Watching = userAnimes.Count(ua => ua.WatchStatus == "Watching"),
+                Completed = userAnimes.Count(ua => ua.WatchStatus == "Completed"),
+                OnHold = userAnimes.Count(ua => ua.WatchStatus == "On_Hold"),
+                Dropped = userAnimes.Count(ua => ua.WatchStatus == "Dropped"),
+                PlanToWatch = userAnimes.Count(ua => ua.WatchStatus == "Plan_To_Watch"),
+
+                // Total episodes watched
+                TotalEpisodes = userAnimes.Sum(ua => ua.Progress ?? 0),
+
+                // Average score (excluding 0/null scores)
+                AverageScore = Math.Round(userAnimes.Where(ua => ua.Score > 0)
+                                          .Any()
+                                ? (double)userAnimes.Where(ua => ua.Score > 0)
+                                                .Average(ua => ua.Score ?? 0): 0,2),
+
+                Days = Math.Round((double)(userAnimes.Sum(ua => (ua.Progress ?? 0) * (ua.Duration ?? 0)) / 1440.0),2)
+            };
+
+            return animeStats;
+        }
         public async Task RemoveAnimeFromList(string userId, int animeId)
         {
             var userAnime = await _context.UserAnimes
@@ -104,8 +134,9 @@ namespace khavarlist.Services
             }
         }
 
-        public async Task UpdateAnimeProgress(string userId, int animeId, int episodesWatched)
+        public async Task UpdateAnimeProgress(string userId, int animeId, int episodesWatched,string duration)
         {
+
             var userAnime = await _context.UserAnimes
                 .Include(ua => ua.Anime)
                 .FirstOrDefaultAsync(ua => ua.UserId == userId && ua.AnimeId == animeId);
@@ -114,9 +145,12 @@ namespace khavarlist.Services
             {
                 userAnime.Progress = episodesWatched;
 
+                int durationInMinutes = ParseDuration(duration);
+                userAnime.Duration = durationInMinutes * episodesWatched;
                 if (userAnime.Anime.TotalEpisodes.HasValue &&
                     episodesWatched >= userAnime.Anime.TotalEpisodes.Value)
                 {
+               
                     userAnime.WatchStatus = "Completed";
                 }
                 await _context.SaveChangesAsync();
@@ -152,6 +186,29 @@ namespace khavarlist.Services
             return existing;
         
         }
+        public int ParseDuration(string duration)
+        {
+            int totalMinutes = 0;
+            var parts = duration.ToLower().Split(' ');
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (int.TryParse(parts[i], out int value))
+                {
+                    if (i + 1 < parts.Length)
+                    {
+                        if (parts[i + 1].Contains("hr"))
+                            totalMinutes += value * 60;
+                        else if (parts[i + 1].Contains("min"))
+                            totalMinutes += value;
+                    }
+                }
+            }
+
+            return totalMinutes;
+        }
 
     }
+
+
 }

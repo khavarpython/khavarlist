@@ -24,26 +24,12 @@
             </div>
         </div>
         
-        <div class="" style="width:28rem">
-            <div class="w-100 h-75 mb-2">
-                @if (Model.Data.Trailer != null)
-                {
-                     <iframe class="w-100 h-100" src=@Model.Data.Trailer.embed_url></iframe>
-                }
-            </div>
-
-            <div class="d-flex gap-1 justify-content-center">
-                <span>@Model.Data.Source</span>
-                <span>@Model.Data.Episodes Episodes</span>
-                <span>@Model.Data.Type</span>
-            </div>
-        </div>
-
-        <div class="d-flex flex-column gap-4" style="width:21rem">
+  
+        <div class="d-flex flex-column gap-4" style="width:40rem">
             <div class="w-100 d-flex justify-content-between gap-3 mb-1 border border-light border-1 p-1" style="font-size:0.8rem">
-                <span>Rank: @Model.Data.Rank</span>
-                <span>Score: @Model.Data.Score</span>
-                <span class="text-capitalize">Season: @Model.Data.Season @Model.Data.Year</span>
+                @if(Model.Data.Rank != null){ <span>Rank: @Model.Data.Rank</span>}
+                 @if(Model.Data.Score != null){<span>Score: @Model.Data.Score</span>}
+                @if(Model.Data.Season != null){<span class="text-capitalize"> Season: @Model.Data.Season @Model.Data.Year</span>}
             </div>
 
             <div class="d-flex gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
@@ -55,7 +41,7 @@
                     </button>                   
                     
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
@@ -66,7 +52,7 @@
                 else
                 {
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:6.5rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
@@ -76,7 +62,7 @@
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:5.5rem;" name="score" id="score" data-anime-id="@Model.Data.MalId">
+                <select class="form-select form-select-sm list-dropdown" style="width:7rem;"  name="score" id="score" data-anime-id="@Model.Data.MalId">
                     <option disabled selected="@(userAnimeDetails?.Score == 0 || userAnimeDetails?.Score == null)">
                         Select
                     </option>
@@ -94,19 +80,36 @@
                 </select>
 
                 @* Update Progress *@
-                <div class="d-flex input-group input-group-sm" style="max-width: 7rem; height: 31px;">
+                <div class="d-flex input-group input-group-sm" style="max-width: 9rem; height: 31px;">
                     <span class="align-self-center ps-2 pe-1 m-0 border border-end-0 text-black bg-white rounded-start"
-                          style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">Episodes:</span>
-                    <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0" style="width:1.8rem; height: 31px;"
+                          style="font-size:0.8rem; height: 31px; display: flex; align-items: center;">
+                          Episodes:
+                      </span>
+
+                    <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0"
+                           style="width:2.5rem; height: 31px;"
                            value="@(userAnimeDetails?.Progress ?? 0)" type="number" id="progress" name="progress" min="0"
-                           max="@(Model.Data.Episodes ?? 9999)" data-anime-id="@Model.Data.MalId" />
+                           max="@(Model.Data.Episodes ?? 9999)" data-anime-id="@Model.Data.MalId" data-duration="@Model.Data.Duration" />
                 </div>
             </div>
+
+            <div class="d-flex gap-1 justify-content-center">
+                <span>@Model.Data.Source</span>
+                <span>@Model.Data.Episodes Episodes</span>
+                <span>@Model.Data.Type</span>
+            </div>
+        </div>
+
+        <div style="width:28rem;aspect-ratio:auto">
+            @if (Model.Data.Trailer != null)
+            {
+                <iframe class="w-100 h-100" src=@Model.Data.Trailer.embed_url></iframe>
+            }
         </div>
     </div>
 
     
-    @if(Model.Data.Synopsis != null)
+    @if(Model.Data.Synopsis != "")
     {
     <div class="mt-5">
         <h6 class="border-bottom border-light"> Synopsis </h6>
@@ -114,7 +117,7 @@
     </div>
     }
 
-    @if(Model.Data.Background != null)
+    @if(Model.Data.Background != "")
     {
         <div class="mt-5">
             <h6 class="border-bottom border-light"> Background </h6>

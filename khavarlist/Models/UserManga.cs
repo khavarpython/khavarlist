@@ -11,7 +11,7 @@ namespace khavarlist.Models
         public required string ReadStatus { get; set; }
         public int? Progress { get; set; }
         public int? Score { get; set; }
-
+        public int? Duration { get; set; }
         public User? User { get; set; }
         public Manga? Manga { get; set; }
     }

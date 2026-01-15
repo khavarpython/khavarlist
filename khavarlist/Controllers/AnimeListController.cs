@@ -81,14 +81,14 @@ namespace khavarlist.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProgress(int animeId, int progress)
+        public async Task<IActionResult> UpdateProgress(int animeId, int progress,string duration)
         {
             try
             {
                 var userId = _userManager.GetUserId(User);
                 if (userId != null)
                 {
-                    await _animeService.UpdateAnimeProgress(userId, animeId, progress);
+                    await _animeService.UpdateAnimeProgress(userId, animeId, progress, duration);
                     return Json(new { success = true, message = "Progress updated!" });
                 }
                 else

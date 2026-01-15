@@ -24,7 +24,9 @@ namespace khavarlist.Controllers
             var viewModel = new ProfileView
             {
                 UserMangas = await _mangaService.GetUserMangas(userId),
-                UserAnimes = await _animeService.GetUserAnimes(userId)
+                UserAnimes = await _animeService.GetUserAnimes(userId),
+                AnimeStats = await _animeService.GetUserAnimeStats(userId),
+               // MangaStats = await _animeService.GetUserMangaStats(userId)
             };
             return View("Profile", viewModel);
         }

@@ -44,6 +44,9 @@ namespace khavarlist.Models
         [JsonProperty("background")]
         public string? Background { get; set; }
 
+        [JsonProperty("duration")]
+        public string? Duration { get; set; }
+
         [JsonProperty("season")]
         public string? Season { get; set; }
 

@@ -131,10 +131,22 @@ body {
 }
 
 .list_dropdown {
-    font-size: 0.8rem; 
-    background-size: 8px 8px; 
+    font-size: 0.8rem;
+    background-size: 8px 8px;
     background-position: right 0.25rem center;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 0.5rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; 
+    appearance: textfield;
 }
 .br-orange {
     border-bottom: 2px solid #FF7A00;

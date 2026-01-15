@@ -72,7 +72,7 @@ async function updateStatus(animeId, watchStatus) {
 }
 
 // 3. Update progress
-async function updateProgress(animeId, progress) {
+async function updateProgress(animeId, progress, duration) {
     try {
         const response = await fetch('/AnimeList/UpdateProgress', {
             method: 'POST',
@@ -82,7 +82,8 @@ async function updateProgress(animeId, progress) {
             },
             body: new URLSearchParams({
                 animeId: animeId,
-                progress: progress
+                progress: progress,
+                duration:duration
             })
         });
 
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (progressInput) {
         const animeId = progressInput.dataset.animeId;
+        const duration = progressInput.dataset.duration;
         if (animeId) {
             // Fires when user clicks away or presses Enter
             progressInput.addEventListener('blur', function () {
@@ -175,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Only update if there's a valid number
                 if (!isNaN(progress) && progress >= 0) {
-                    updateProgress(animeId, progress);
+                    updateProgress(animeId, progress,duration);
                 }
             });
         }
