@@ -30,7 +30,7 @@
             </svg>
         </button>
 
-        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+        <div class="scroll-content d-flex gap-3 overflow-x-auto text-nowrap overflow-y-hidden">
             @if (Model.CurrentAnime != null)
             {
                 @foreach (var anime in Model.CurrentAnime)
@@ -71,7 +71,7 @@
             </svg>
         </button>
 
-        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+        <div class="scroll-content d-flex gap-3 overflow-x-auto text-nowrap overflow-y-hidden">
             @if (Model.TopAnime != null)
             {
                 @foreach (var anime in Model.TopAnime)
@@ -112,7 +112,7 @@
             </svg>
         </button>
 
-        <div class="scroll-content d-flex gap-3 overflow-x-hidden text-nowrap overflow-y-hidden">
+        <div class="scroll-content d-flex gap-3 overflow-x-auto text-nowrap overflow-y-hidden">
             @if (Model.TopManga != null)
             {
                 @foreach (var manga in Model.TopManga)
@@ -147,16 +147,16 @@
         @if(Model.AnimeRecs != null)
         {
         <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
-            <div class="d-flex flex-column flex-lg-row justify-content-around gap-3 pt-3">
+            <div class="d-flex flex-column flex-lg-row justify-content-around gap-3 pt-3 pb-2">
             @foreach (var animeRec in Model.AnimeRecs.Take(3))
                 {
-                    <div class="d-flex justify-content-around align-items-start gap-2">
+                    <div class="d-flex justify-content-around align-items-start gap-3">
                         <div class="d-flex flex-column gap-1 justify-content-start" style="width:9rem;">
                             <span class="text-center fw-bold orange"> If You Like</span>
 
-                            <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Anime" asp-route-id="@animeRec.Entry[0].MalId">
+                            <a class="text-decoration-none d-flex flex-column gap-1" asp-controller="Show" asp-action="Anime" asp-route-id="@animeRec.Entry[0].MalId">
                                 <img class="align-self-center object-fit-cover rounded-2" src="@animeRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
-                                <span class="w-100 text-wrap text-center text-white" style="font-size:0.7rem;">
+                                <span class="w-100 text-wrap text-center text-white clamp-line">
                                     @animeRec.Entry[0].Title
                                 </span>
                             </a>
@@ -167,7 +167,7 @@
 
                             <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Anime" asp-route-id="@animeRec.Entry[1].MalId">
                                 <img class="align-self-center object-fit-cover rounded-2" src="@animeRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
-                                <span class="text-wrap text-white text-center mx-1" style="font-size:0.7rem;">
+                                <span class="text-wrap text-white text-center mx-1 clamp-line" >
                                     @animeRec.Entry[1].Title
                                 </span>
                             </a>
@@ -188,16 +188,16 @@
     @if (Model.MangaRecs != null)
     {
         <div class="rounded-4 p-2 mt-3" style="background-color:#2D2D2D;">
-            <div class="d-flex flex-column flex-lg-row  justify-content-around gap-3 pt-3">
+            <div class="d-flex flex-column flex-lg-row justify-content-around gap-3 pt-3 pb-2">
                 @foreach (var mangaRec in Model.MangaRecs.Take(3))
                 {
-                    <div class="d-flex justify-content-around align-items-start gap-2">
+                    <div class="d-flex justify-content-around align-items-start gap-3">
                         <div class="d-flex flex-column gap-1 justify-content-start" style="width:9rem;">
                             <span class="text-center fw-bold orange">If You Like</span>
 
                             <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Manga" asp-route-id="@mangaRec.Entry[0].MalId">
                                 <img class="align-self-center object-fit-cover rounded-2" src="@mangaRec.Entry[0].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
-                                <span class="w-100 text-wrap text-center text-white" style="font-size:0.7rem;">
+                                <span class="w-100 text-wrap text-center text-white clamp-line">
                                     @mangaRec.Entry[0].Title
                                 </span>
                             </a>
@@ -208,7 +208,7 @@
 
                             <a class="text-decoration-none d-flex flex-column gap-1 " asp-controller="Show" asp-action="Manga" asp-route-id="@mangaRec.Entry[1].MalId">
                                 <img class="align-self-center object-fit-cover rounded-2" src="@mangaRec.Entry[1].Images.Jpg.ImageUrl" style="width:9rem;height:12rem;" />
-                                <span class="text-wrap text-white text-center mx-1" style="font-size:0.7rem;">
+                                <span class="text-wrap text-white text-center mx-1 clamp-line">
                                     @mangaRec.Entry[1].Title
                                 </span>
                             </a>
@@ -220,9 +220,10 @@
     }
 </div>
 
-<!-- Top  Reviews -->
+<!-- Top  Characters -->
 <div>
     <div class="br-orange d-flex justify-content-between mt-3">
-        <h5>Top Reviews </h5>
+        <h5>Top Characters </h5>
     </div>
+
 </div>

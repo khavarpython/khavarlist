@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace khavarlist.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,6 +64,20 @@ namespace khavarlist.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mangas",
+                columns: table => new
+                {
+                    MalId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalChapters = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mangas", x => x.MalId);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,7 +196,8 @@ namespace khavarlist.Migrations
                     AnimeId = table.Column<int>(type: "int", nullable: false),
                     WatchStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Progress = table.Column<int>(type: "int", nullable: true),
-                    Score = table.Column<int>(type: "int", nullable: true)
+                    Score = table.Column<int>(type: "int", nullable: true),
+                    Duration = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,6 +213,36 @@ namespace khavarlist.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserMangas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MangaId = table.Column<int>(type: "int", nullable: false),
+                    ReadStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Progress = table.Column<int>(type: "int", nullable: true),
+                    Score = table.Column<int>(type: "int", nullable: true),
+                    Duration = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMangas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserMangas_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserMangas_Mangas_MangaId",
+                        column: x => x.MangaId,
+                        principalTable: "Mangas",
+                        principalColumn: "MalId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -250,6 +295,17 @@ namespace khavarlist.Migrations
                 table: "UserAnimes",
                 columns: new[] { "UserId", "AnimeId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMangas_MangaId",
+                table: "UserMangas",
+                column: "MangaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMangas_UserId_MangaId",
+                table: "UserMangas",
+                columns: new[] { "UserId", "MangaId" },
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -274,6 +330,9 @@ namespace khavarlist.Migrations
                 name: "UserAnimes");
 
             migrationBuilder.DropTable(
+                name: "UserMangas");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -281,6 +340,9 @@ namespace khavarlist.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Mangas");
         }
     }
 }

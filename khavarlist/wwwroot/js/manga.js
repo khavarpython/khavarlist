@@ -28,10 +28,8 @@ async function addToMangaList(mangaId, readStatus) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -59,10 +57,8 @@ async function updateMangaStatus(mangaId, readStatus) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -89,10 +85,8 @@ async function updateMangaProgress(mangaId, progress) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -119,10 +113,8 @@ async function updateMangaScore(mangaId, score) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {

@@ -12,15 +12,15 @@ using khavarlist.Data;
 namespace khavarlist.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20260107044548_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260119193627_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.1")
+                .HasAnnotation("ProductVersion", "10.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -256,6 +256,26 @@ namespace khavarlist.Migrations
                     b.ToTable("Animes");
                 });
 
+            modelBuilder.Entity("khavarlist.Models.Manga", b =>
+                {
+                    b.Property<int>("MalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TotalChapters")
+                        .HasColumnType("int");
+
+                    b.HasKey("MalId");
+
+                    b.ToTable("Mangas");
+                });
+
             modelBuilder.Entity("khavarlist.Models.UserAnime", b =>
                 {
                     b.Property<int>("Id")
@@ -265,6 +285,9 @@ namespace khavarlist.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AnimeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Duration")
                         .HasColumnType("int");
 
                     b.Property<int?>("Progress")
@@ -289,6 +312,44 @@ namespace khavarlist.Migrations
                         .IsUnique();
 
                     b.ToTable("UserAnimes");
+                });
+
+            modelBuilder.Entity("khavarlist.Models.UserManga", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MangaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Progress")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReadStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MangaId");
+
+                    b.HasIndex("UserId", "MangaId")
+                        .IsUnique();
+
+                    b.ToTable("UserMangas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -357,6 +418,25 @@ namespace khavarlist.Migrations
                         .IsRequired();
 
                     b.Navigation("Anime");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("khavarlist.Models.UserManga", b =>
+                {
+                    b.HasOne("khavarlist.Models.Manga", "Manga")
+                        .WithMany()
+                        .HasForeignKey("MangaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("khavarlist.Areas.Identity.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Manga");
 
                     b.Navigation("User");
                 });

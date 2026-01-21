@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Log In";
 }
-<div class="container w-50 text-white pt-5">
+<div class="container w-75 text-white pt-5">
         <section>
             <form id="account" method="post">
                 <h2>Login</h2>
@@ -21,7 +21,11 @@
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
-                <div class="checkbox mb-3 d-flex justify-content-between">
+                <div>
+                    <button id="login-submit" type="submit" class="w-50 mt-1 btn btn-lg btn-primary d-block mx-auto">Log in</button>
+                </div>
+
+                <div class="checkbox mb-3 mt-2 d-flex fw-semibold flex-column flex-md-row justify-content-between">
                     <label asp-for="Input.RememberMe" class="form-label">
                         <input class="form-check-input" asp-for="Input.RememberMe" />
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
@@ -31,11 +35,6 @@
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="nav-link">Don't have an account? Register</a>
                     </p>
                 </div>
-
-                <div>
-                    <button id="login-submit" type="submit" class="w-50 btn btn-lg btn-primary d-block mx-auto">Log in</button>
-                </div>
-
             </form>
         </section>
 </div>

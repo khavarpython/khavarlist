@@ -7,6 +7,6 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "AuthDbContextConnection": "Data Source=khavarlist.db"
+    "DefaultConnection": "Server=LAPTOP-UP9JDUDS\\SQLEXPRESS;Database=KhavarListDB;User Id=sa;Password=YourStrong@Passw0rd123;TrustServerCertificate=True;Encrypt=False;"
   }
 }

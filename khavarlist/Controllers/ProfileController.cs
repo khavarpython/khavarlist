@@ -1,11 +1,13 @@
 ﻿using khavarlist.Areas.Identity.Data;
 using khavarlist.Models;
 using khavarlist.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace khavarlist.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IAnimeService _animeService;

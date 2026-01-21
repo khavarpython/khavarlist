@@ -6,7 +6,7 @@ function getAntiForgeryToken() {
 
 // Helper function to show messages (you can customize this)
 function showMessage(message, isSuccess) {
-    alert(message); // Replace with toast/notification library if you prefer
+    alert(message); 
 }
 
 // 1. Add anime to list
@@ -27,10 +27,8 @@ async function addToList(animeId, watchStatus) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -58,10 +56,8 @@ async function updateStatus(animeId, watchStatus) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -90,10 +86,8 @@ async function updateProgress(animeId, progress, duration) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {
@@ -121,10 +115,8 @@ async function updateScore(animeId, score) {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
             return true;
         } else {
-            showMessage(data.message, false);
             return false;
         }
     } catch (error) {

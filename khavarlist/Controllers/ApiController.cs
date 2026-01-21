@@ -207,6 +207,7 @@ namespace khavarlist.Controllers
             }
         }
 
+        // GET MANGA CHARACTERS
         public async Task<JikanMangaCharacters?> GetMangaCharacters(int id)
         {
             try
@@ -231,21 +232,22 @@ namespace khavarlist.Controllers
             }
         }
 
-
-        // undecidicde
-        public async Task<JikanAnimeList?> GetTopReviews()
+        // GET TOP CHARACTERS
+        public async Task<JikanMangaCharacters?> GetTopCharacters()
         {
             try
             {
-                var url = "https://api.jikan.moe/v4/top/reviews";
+
+                var url = $"https://api.jikan.moe/v4/top/characters";
                 var response = await _httpClient.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var data = JsonConvert.DeserializeObject<JikanAnimeList>(content);
+                    var data = JsonConvert.DeserializeObject<JikanMangaCharacters>(content);
                     return data;
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -254,6 +256,5 @@ namespace khavarlist.Controllers
                 return null;
             }
         }
-
     }
 }

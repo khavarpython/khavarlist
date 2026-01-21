@@ -9,5 +9,8 @@ namespace khavarlist.Models
         public List<JikanAnimeData>? CurrentAnime { get; set; }
         public List<JikanRecommendationData>? AnimeRecs { get; set; }
         public List<JikanRecommendationData>? MangaRecs { get; set; }
+
+        public List<JikanMangaCharactersData>? TopCharacters { get; set; }
+
     }
 }

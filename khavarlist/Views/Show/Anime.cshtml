@@ -5,13 +5,14 @@
 }
 @Html.AntiForgeryToken()
 
-<div class="mt-4 w-50">
-    <h3 class="text-wrap fw-bold">@Model.Data.Title</h3>
+<div class="mt-4">
+    <h4 class="text-wrap fw-bold">@Model.Data.Title</h4>
+    @if(!String.IsNullOrEmpty(Model.Data.EnglishTitle)){<h6 class="text-wrap fw-semibold orange">@Model.Data.EnglishTitle</h6>}
 </div>
 
 <div>
-    <div class="d-flex gap-4">
-        <div style="width:14.1rem;">
+    <div class="d-flex flex-column flex-lg-row gap-4 border-1 border-top border-white pt-2">
+        <div class="w-100 flex-grow-1" style="max-width:14.1rem;">
             <img src="@Model.Data.Images.Jpg.ImageUrl" />
             <div class="d-flex flex-wrap gap-2">
                 @if(Model.Data.Genres != null)
@@ -29,13 +30,16 @@
         </div>
         
   
-        <div class="d-flex flex-column gap-1" style="width:30rem">
-            <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
-                <iframe src="@Model.Data.Trailer.embed_url.Replace("autoplay=1", "autoplay=0")"
-                        title="@Model.Data.Title Trailer"
-                        allowfullscreen>
-                </iframe>   
-            </div>
+        <div class="d-flex flex-column gap-1 flex-grow-1" style="max-width:30rem">
+            @if (Model.Data.Trailer.embed_url != null)
+            {
+                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
+                    <iframe src="@Model.Data.Trailer.embed_url.Replace("autoplay=1", "autoplay=0")"
+                    title="@Model.Data.Title Trailer"
+                    allowfullscreen>
+                    </iframe>   
+                </div>            
+            }
 
             <div class="w-100 d-flex justify-content-between gap-3 my-1 border border-light border-1 p-1" style="font-size:0.8rem">
                 @if(Model.Data.Rank != null){ <span>Rank: @Model.Data.Rank</span>}
@@ -52,7 +56,7 @@
                     </button>                   
                     
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="max-width:8rem;display:none;" name="status" id="status" data-anime-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
@@ -63,7 +67,7 @@
                 else
                 {
                     @* Update Status *@
-                    <select class="form-select form-select-sm list-dropdown" style="width:8rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
+                    <select class="form-select form-select-sm list-dropdown" style="max-width:8rem;" name="status" id="status" data-anime-id="@Model.Data.MalId">
                         <option value="Watching" selected="@(userAnimeDetails?.WatchStatus == "Watching")">Watching</option>
                         <option value="Completed" selected="@(userAnimeDetails?.WatchStatus == "Completed")">Completed</option>
                         <option value="On_Hold" selected="@(userAnimeDetails?.WatchStatus == "On_Hold")">On Hold</option>
@@ -73,7 +77,7 @@
                     }
 
                 @* Update Score *@
-                <select class="form-select form-select-sm list-dropdown" style="width:7.5rem;"  name="score" id="score" data-anime-id="@Model.Data.MalId">
+                <select class="form-select form-select-sm list-dropdown" style="max-width:7.5rem;"  name="score" id="score" data-anime-id="@Model.Data.MalId">
                     <option disabled selected="@(userAnimeDetails?.Score == 0 || userAnimeDetails?.Score == null)">
                         Select
                     </option>
@@ -98,7 +102,7 @@
                       </span>
 
                     <input class="form-control form-control-sm m-0 shadow-none px-2 border-start-0"
-                           style="width:2.5rem; height: 31px;"
+                           style="max-width:2.5rem; height: 31px;"
                            value="@(userAnimeDetails?.Progress ?? 0)"
                            type="number"
                            id="progress"

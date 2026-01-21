@@ -1,12 +1,14 @@
 ﻿using khavarlist.Areas.Identity.Data;
 using khavarlist.Models;
 using khavarlist.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace khavarlist.Controllers
 {
+    [Authorize]
     public class ShowController : Controller
     {
         private readonly ApiController _apiController;

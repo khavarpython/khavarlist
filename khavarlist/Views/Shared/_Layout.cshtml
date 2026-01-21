@@ -15,8 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom border-black bg-orange" >
             <div class="container-fluid">
-
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand d-flex align-items-center" style="font-family: Tahoma, sans-serif;" asp-area="" asp-controller="Home" asp-action="Index">
                     <h1 class="mb-0">Khavar List</h1>
                 </a>
 
@@ -25,24 +24,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <div class="collapse navbar-collapse ms-4" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-sm-0 d-sm-flex">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Search" asp-action="AnimeSearch">Anime</a>
+                            <a class="nav-link text-dark fw-semibold" asp-controller="Search" asp-action="AnimeSearch">Anime</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Search" asp-action="MangaSearch">Manga</a>
+                            <a class="nav-link text-dark fw-semibold" asp-controller="Search" asp-action="MangaSearch">Manga</a>
                         </li>
                     </ul>
 
                     <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-4 mt-2 mt-sm-0">
                         <form class="d-flex" id="searchForm" asp-action="Search" asp-controller="Search" method="get">
-                            <select class="form-select text-white list-dropdown border-0 rounded-0 rounded-start" style="width:6rem;background-color:#1F1F1F;" name="searchType" id="searchType">
+                            <select class="form-select text-white list-dropdown shadow-none border-0 rounded-0 rounded-start" style="width:6rem;background-color:#1F1F1F;" name="searchType" id="searchType">
                                 <option value="anime" selected>Anime</option>
                                 <option value="manga">Manga</option>
                             </select>
                             <input class="form-control rounded-0 border-0 text-white rounded-end" style="background-color: #1F1F1F;" value="@ViewBag.Query" name="query" type="search" placeholder="Search" aria-label="Search">
                         </form>
+
                         <partial name="_LoginPartial.cshtml" />
                     </div>
                 </div>
@@ -63,7 +64,7 @@
 
                 <div class="col-12 col-md-4 text-center text-md-start">
                     <div class="d-flex gap-3 align-items-center justify-content-center justify-content-md-start">
-                        <span class="fw-semibold">Learn about me</span>
+                        <span class="fw-semibold"></span>
                         <div class="d-flex gap-2">
                             <a href="#" class="text-dark" aria-label="GitHub">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -96,7 +97,7 @@
                 </div>
 
                 <div class="col-12 col-md-4 text-center text-md-end">
-                    <p class="mb-1 lh-sm" style="font-size:0.85rem;">This is list website by Khavar Facey</p>
+                    <p class="mb-1 lh-sm" style="font-size:0.85rem;">Designed by Khavar Facey</p>
                     <p class="mb-0 lh-sm" style="font-size: 0.65rem;">Built using ASP.NET</p>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container w-50 text-white pt-5">
+<div class="container w-75 text-white pt-5">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account</h2>
             <hr />
@@ -42,8 +42,11 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
 
-        <a href="/Identity/Account/Login" class="nav-link pt-2">Already a user? Login Here</a>
-        <button id="registerSubmit" type="submit" class="w-50 btn btn-lg btn-primary d-block mx-auto">Register</button>
+
+        <button id="registerSubmit" type="submit" class="w-50 mt-1 btn btn-lg btn-primary d-block mx-auto">Register</button>
+
+        <a href="/Identity/Account/Login" class="nav-link mt-2 pt-2 fw-semibold">Already a user? Login Here</a>
+
         </form>
 </div>
 

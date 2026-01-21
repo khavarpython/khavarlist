@@ -4,139 +4,205 @@
 }
 
 <div>
-    <h5 class="mt-1 br-orange">Anime List</h5>
-
-    <div class="my-3 p-3 rounded border w-75 mx-auto" style="background-color:#2D2D2D;">
-        <div class="d-flex gap-4 mb-3">
-            <span class="text-white">Duration: @Model.AnimeStats.Days Days</span>
-            <span class="text-white">Average Score: @Model.AnimeStats.AverageScore </span>
-            <span class="text-white">Total Entries: @Model.AnimeStats.TotalEntries</span>
-            <span class="text-white">Total Episodes: @Model.AnimeStats.TotalEpisodes</span>
-        </div>
-
-        <div class="d-flex gap-3 mb-3 flex-wrap">
-            <span style="font-size:0.9rem;" >Watching: @Model.AnimeStats.Watching</span>
-            <span style="font-size:0.9rem;" >Completed: @Model.AnimeStats.Completed</span>
-            <span style="font-size:0.9rem;">On Hold: @Model.AnimeStats.OnHold</span>
-            <span style="font-size:0.9rem;">Plan to Watch: @Model.AnimeStats.PlanToWatch</span>
-            <span style="font-size:0.9rem;" >Dropped: @Model.AnimeStats.Dropped</span>
-        </div>
-    </div>
-
-
-    @if (Model.UserAnimes != null)
+    <h5 class="my-4 br-orange">Anime List</h5>
+    @if (Model.UserAnimes != null && Model.UserAnimes.Any())
     {
-        <table class="table table-dark table-hover" style="table-layout:fixed;"> 
-            <colgroup>
-                <col style="width: 10%;">
-                <col style="width: 45%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-            </colgroup>
+        <div class="my-3 py-3 px-2 rounded border w-100 w-md-50 mx-auto" style="background-color:#2D2D2D;">
+            <div class="d-flex justify-content-evenly gap-3 mb-3">
+                <span class="text-white" style="font-size:0.9rem;">Duration: @Model.AnimeStats.Days Days</span>
+                <span class="text-white" style="font-size:0.9rem;">Average Score: @Model.AnimeStats.AverageScore </span>
+                <span class="text-white" style="font-size:0.9rem;">Total Entries: @Model.AnimeStats.TotalEntries</span>
+                <span class="text-white" style="font-size:0.9rem;">Total Episodes: @Model.AnimeStats.TotalEpisodes</span>
+            </div>
 
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Anime Title</th>
-                    <th>Score</th>
-                    <th>Progress</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var userAnime in Model.UserAnimes)
-                {
-                    <tr class="position-relative">
-                        <td>
-                            <img class="object" style="width:3rem;height:5rem;" src="@userAnime.Anime.Image" alt="@userAnime.Anime.Title" />
-                        </td>
-                        <td class="text-wrap">
-                            <a class="text-decoration-none orange stretched-link" asp-controller="Show" asp-action="Anime" asp-route-id="@userAnime.Anime.MalId">
-                                @userAnime.Anime.Title
-                            </a>
-                        </td>
-                        <td class="orange">
-                            @userAnime.Score
-                        </td>
-                        <td class="orange">
-                            @userAnime.Progress / @userAnime.Anime.TotalEpisodes
-                        </td>
-                        <td class="orange">
-                            @userAnime.WatchStatus
-                        </td>
+            <div class="d-flex justify-content-evenly gap-3 mb-3 flex-wrap">
+                <span style="font-size:0.9rem;" >Watching: @Model.AnimeStats.Watching</span>
+                <span style="font-size:0.9rem;" >Completed: @Model.AnimeStats.Completed</span>
+                <span style="font-size:0.9rem;">On Hold: @Model.AnimeStats.OnHold</span>
+                <span style="font-size:0.9rem;">Plan to Watch: @Model.AnimeStats.PlanToWatch</span>
+                <span style="font-size:0.9rem;" >Dropped: @Model.AnimeStats.Dropped</span>
+            </div>
+        </div>
+
+        <!-- Mobile: Card Layout -->
+        <div class="d-md-none">
+            @foreach (var userAnime in Model.UserAnimes)
+            {
+                <div class="card bg-dark text-white mb-3 border-secondary">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img class="img-fluid object-fit-cover h-100" src="@userAnime.Anime.Image" alt="@userAnime.Anime.Title" />
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body p-2">
+                                <a class="text-decoration-none orange fw-bold" asp-controller="Show" asp-action="Anime" asp-route-id="@userAnime.Anime.MalId">
+                                    @userAnime.Anime.Title
+                                </a>
+                                <div class="mt-2" style="font-size:0.85rem;">
+                                    <div class="orange">Score: @userAnime.Score</div>
+                                    <div class="orange">Progress: @userAnime.Progress / @userAnime.Anime.TotalEpisodes</div>
+                                    <div class="orange">Status: @userAnime.WatchStatus</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Desktop: Table Layout -->
+        <div class="d-none d-md-block">
+            <table class="table table-dark table-hover" style="table-layout:fixed;"> 
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 45%;">
+                    <col style="width: 15%;">
+                    <col style="width: 15%;">
+                    <col style="width: 15%;">
+                </colgroup>
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Anime Title</th>
+                        <th>Score</th>
+                        <th>Progress</th>
+                        <th>Status</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    @foreach (var userAnime in Model.UserAnimes)
+                    {
+                        <tr class="position-relative">
+                            <td>
+                                <img class="object-fit-cover" style="width:4rem;height:5rem;" src="@userAnime.Anime.Image" alt="@userAnime.Anime.Title" />
+                            </td>
+                            <td class="text-wrap">
+                                <a class="text-decoration-none orange stretched-link" asp-controller="Show" asp-action="Anime" asp-route-id="@userAnime.Anime.MalId">
+                                    @userAnime.Anime.Title
+                                </a>
+                            </td>
+                            <td class="orange">
+                                @userAnime.Score
+                            </td>
+                            <td class="orange">
+                                @userAnime.Progress / @userAnime.Anime.TotalEpisodes
+                            </td>
+                            <td class="orange">
+                                @userAnime.WatchStatus
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h2>No Anime In List</h2>
     }
 </div>
 
 <div>
     <h5 class="mt-1 br-orange">Manga List</h5>
 
-    <div class="my-3 p-3 rounded border w-75 mx-auto" style="background-color:#2D2D2D;">
-        <div class="d-flex gap-4 mb-3">
-            <span class="text-white">Duration: @Model.MangaStats.Days Days</span>
-            <span class="text-white">Average Score: @Model.MangaStats.AverageScore </span>
-            <span class="text-white">Total Entries: @Model.MangaStats.TotalEntries</span>
-            <span class="text-white">Total Chapters: @Model.MangaStats.TotalChapters</span>
-        </div>
-
-        <div class="d-flex gap-3 mb-3 flex-wrap">
-            <span style="font-size:0.9rem;">Watching: @Model.MangaStats.Reading</span>
-            <span style="font-size:0.9rem;">Completed: @Model.MangaStats.Completed</span>
-            <span style="font-size:0.9rem;">On Hold: @Model.MangaStats.OnHold</span>
-            <span style="font-size:0.9rem;">Plan to Watch: @Model.MangaStats.PlanToRead</span>
-            <span style="font-size:0.9rem;">Dropped: @Model.MangaStats.Dropped</span>
-        </div>
-    </div>
-
-
-    @if (Model.UserMangas  != null)
+    @if (Model.UserMangas != null && Model.UserMangas.Any())
     {
-        <table class="table table-dark table-hover" style="table-layout:fixed;">
-            <colgroup>
-                <col style="width: 10%;">
-                <col style="width: 45%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-            </colgroup>
+        <div class="my-3 py-3 px-2 rounded border w-100 w-md-50 mx-auto" style="background-color:#2D2D2D;">
+            <div class="d-flex justify-content-evenly gap-3 mb-3">
+                <span class="text-white" style="font-size:0.9rem;">Duration: @Model.MangaStats.Days Days</span>
+                <span class="text-white" style="font-size:0.9rem;">Average Score: @Model.MangaStats.AverageScore </span>
+                <span class="text-white" style="font-size:0.9rem;">Total Entries: @Model.MangaStats.TotalEntries</span>
+                <span class="text-white" style="font-size:0.9rem;">Total Chapters: @Model.MangaStats.TotalChapters</span>
+            </div>
 
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Manga Title</th>
-                    <th>Score</th>
-                    <th>Progress</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var userManga in Model.UserMangas)
-                {
-                    <tr class="position-relative">
-                        <td>
-                            <img class="object" style="width:3rem;height:5rem;" src="@userManga.Manga.Image" alt="@userManga.Manga.Title" />
-                        </td>
-                        <td class="text-wrap">
-                            <a class="text-decoration-none orange stretched-link" asp-controller="Show" asp-action="Manga" asp-route-id="@userManga.Manga.MalId">
-                                @userManga.Manga.Title
-                            </a>
-                        </td>
-                        <td class="orange">
-                            @userManga.Score
-                        </td>
-                        <td class="orange">
-                            @userManga.Progress / @userManga.Manga.TotalChapters
-                        </td>
-                        <td class="orange">
-                            @userManga.ReadStatus
-                        </td>
+            <div class="d-flex justify-content-evenly gap-3 mb-3 flex-wrap">
+                <span style="font-size:0.8rem;">Completed: @Model.MangaStats.Completed</span>
+                <span style="font-size:0.8rem;">On Hold: @Model.MangaStats.OnHold</span>
+                <span style="font-size:0.8rem;">Watching: @Model.MangaStats.Reading</span>
+                <span style="font-size:0.8rem;">Plan to Watch: @Model.MangaStats.PlanToRead</span>
+                <span style="font-size:0.8rem;">Dropped: @Model.MangaStats.Dropped</span>
+            </div>
+        </div>
+
+
+        <!-- Mobile: Card Layout -->
+        <div class="d-md-none">
+            @foreach (var userManga in Model.UserMangas)
+            {
+                <div class="card bg-dark text-white mb-3 border-secondary">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <img class="img-fluid object-fit-cover h-100" src="@userManga.Manga.Image" alt="@userManga.Manga.Title" />
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body p-2">
+                                <a class="text-decoration-none orange fw-bold" asp-controller="Show" asp-action="Manga" asp-route-id="@userManga.Manga.MalId">
+                                    @userManga.Manga.Title
+                                </a>
+                                <div class="mt-2" style="font-size:0.85rem;">
+                                    <div class="orange">Score: @userManga.Score</div>
+                                    <div class="orange">Progress: @userManga.Progress / @userManga.Manga.TotalChapters</div>
+                                    <div class="orange">Status: @userManga.ReadStatus</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Desktop: Table Layout -->
+        <div class="d-none d-md-block">
+            <table class="table table-dark table-hover" style="table-layout:fixed;">
+                <colgroup>
+                    <col style="width: 15%;">
+                    <col style="width: 40%;">
+                    <col style="width: 15%;">
+                    <col style="width: 15%;">
+                    <col style="width: 15%;">
+                </colgroup>
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Manga Title</th>
+                        <th>Score</th>
+                        <th>Progress</th>
+                        <th>Status</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    @foreach (var userManga in Model.UserMangas)
+                    {
+                        <tr class="position-relative">
+                            <td>
+                                <img class="object-fit-cover" style="width:4rem;height:5rem;" src="@userManga.Manga.Image" alt="@userManga.Manga.Title" />
+                            </td>
+                            <td class="text-wrap">
+                                <a class="text-decoration-none orange stretched-link" asp-controller="Show" asp-action="Manga" asp-route-id="@userManga.Manga.MalId">
+                                    @userManga.Manga.Title
+                                </a>
+                            </td>
+                            <td class="orange">
+                                @userManga.Score
+                            </td>
+                            <td class="orange">
+                                @userManga.Progress / @userManga.Manga.TotalChapters
+                            </td>
+                            <td class="orange">
+                                @userManga.ReadStatus
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h2>No Manga in List</h2>
     }
 </div>
