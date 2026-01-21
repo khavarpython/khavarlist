@@ -22,4 +22,4 @@ A personal anime and manga tracking web application built with ASP.NET Core and 
 
 ##  Live Demo
 
-[View Live Site]([your-azure-url-here.azurecontainerapps.io](https://khavarlist-app.livelysmoke-4edd1cef.canadacentral.azurecontainerapps.io/))
+[View Live Site](khavarlist-app.livelysmoke-4edd1cef.canadacentral.azurecontainerapps.io)
