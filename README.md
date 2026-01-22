@@ -14,7 +14,7 @@ A personal anime and manga tracking web application built with ASP.NET Core and 
 ##  Tech Stack
 
 - **Frontend:** ASP.NET Core MVC, Bootstrap 5, Razor Pages
-- **Backend:** C# .NET 8
+- **Backend:** C# .NET 10
 - **Database:** Azure SQL Database
 - **Authentication:** ASP.NET Core Identity
 - **Hosting:** Azure Container Apps
