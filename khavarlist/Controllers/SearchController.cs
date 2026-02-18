@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace khavarlist.Controllers
 {
-    [Authorize]
     public class SearchController : Controller
     {
         private readonly ApiController _apiController;

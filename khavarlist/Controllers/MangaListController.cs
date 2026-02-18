@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace khavarlist.Controllers
 {
-    [Authorize]
     public class MangaListController : Controller
     {
         private readonly IMangaService _mangaService;

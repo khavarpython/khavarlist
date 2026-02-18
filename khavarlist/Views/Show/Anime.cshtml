@@ -12,8 +12,9 @@
 
 <div>
     <div class="d-flex flex-column flex-lg-row gap-4 border-1 border-top border-white pt-2">
-        <div class="w-100 flex-grow-1" style="max-width:14.1rem;">
+        <div class="w-100 flex-grow-1 justify-content-center justify-content-lg-start" style="max-width:14.1rem;">
             <img src="@Model.Data.Images.Jpg.ImageUrl" />
+
             <div class="d-flex flex-wrap gap-2">
                 @if(Model.Data.Genres != null)
                 {
@@ -47,7 +48,7 @@
                 @if(Model.Data.Season != null){<span class="text-capitalize"> Season: @Model.Data.Season @Model.Data.Year</span>}
             </div>
 
-            <div class="d-flex flex-column flex-md-row gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
+            <div class="d-flex gap-2 w-100 justify-content-between align-items-center border border-light border-1 p-1 mb-1">
                 @if (!Convert.ToBoolean(ViewData["AddStatus"]))
                 {
                     @* Add to List *@

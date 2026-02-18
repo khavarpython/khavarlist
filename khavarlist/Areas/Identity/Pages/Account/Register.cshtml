@@ -11,43 +11,41 @@
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
         <div class="form-floating mb-3">
-            <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="User Name" />
-            <label asp-for="Input.UserName">User Name</label>
+            <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true"  />
+            <label asp-for="Input.UserName" class="orange">User Name</label>
             <span asp-validation-for="Input.UserName" class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
-            <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="First Name" />
-            <label asp-for="Input.FirstName">First Name</label>
+            <input asp-for="Input.FirstName" class="form-control" aria-required="true" />
+            <label asp-for="Input.FirstName" class="orange">First Name</label>
             <span asp-validation-for="Input.FirstName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Last Name" />
-            <label asp-for="Input.LastName">Last Name</label>
+            <input asp-for="Input.LastName" class="form-control" aria-required="true"  />
+            <label asp-for="Input.LastName" class="orange">Last Name</label>
             <span asp-validation-for="Input.LastName" class="text-danger"></span>
         </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Email" />
-                <label asp-for="Input.Email">Email</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"  />
+                <label asp-for="Input.Email" class="orange">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                <label asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"  />
+                <label asp-for="Input.Password" class="orange">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true"  />
+                <label asp-for="Input.ConfirmPassword" class="orange">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
 
-
         <button id="registerSubmit" type="submit" class="w-50 mt-1 btn btn-lg btn-primary d-block mx-auto">Register</button>
-
-        <a href="/Identity/Account/Login" class="nav-link mt-2 pt-2 fw-semibold">Already a user? Login Here</a>
-
         </form>
+
+    <a href="/Identity/Account/Login" class="orange mt-2 pt-2 fw-semibold">Already a user? Login Here</a>
 </div>
 
 @section Scripts {

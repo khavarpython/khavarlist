@@ -9,7 +9,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace khavarlist.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ApiController _apiController;
