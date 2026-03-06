@@ -9,7 +9,11 @@ var connectionString = builder.Configuration.GetConnectionString("AuthDbContextC
     ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
-   options.UseSqlServer(connectionString));
+   options.UseSqlServer(connectionString, sqlOptions =>
+       sqlOptions.EnableRetryOnFailure(
+           maxRetryCount: 5,
+           maxRetryDelay: TimeSpan.FromSeconds(10),
+           errorNumbersToAdd: null)));
 
 builder.Services.AddDefaultIdentity<User>(options =>
     options.SignIn.RequireConfirmedAccount = false)
@@ -61,7 +65,21 @@ app.MapRazorPages();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-    db.Database.Migrate();
+    var retries = 5;
+    while (retries > 0)
+    {
+        try
+        {
+            db.Database.Migrate();
+            break;
+        }
+        catch (Exception)
+        {
+            retries--;
+            if (retries == 0) throw;
+            Thread.Sleep(5000);
+        }
+    }
 }
 
 app.Run();
