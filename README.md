@@ -17,7 +17,7 @@ A personal anime and manga tracking web application built with ASP.NET Core and 
 - **Backend:** C# .NET 10
 - **Database:** Azure SQL Database
 - **Authentication:** ASP.NET Core Identity
-- **Hosting:** Azure Container Apps
+- **Hosting:** Azure App Services
 - **External API:** MyAnimeList (Jikan API)
 
 ##  Live Demo
