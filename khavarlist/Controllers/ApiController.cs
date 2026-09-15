@@ -31,7 +31,8 @@ namespace khavarlist.Controllers
                     var data = JsonConvert.DeserializeObject<JikanAnimeList>(content);
                     return data;
                 }
-
+                var errorBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"GetAnimes failed. Status: {(int)response.StatusCode} {response.StatusCode}. Body: {errorBody}");
                 return null;
             }
             catch (Exception ex)
